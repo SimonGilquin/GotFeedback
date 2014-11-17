@@ -20,12 +20,12 @@ namespace GotFeedback.Migrations
             //  This method will be called after migrating to the latest version.
 
             context.Topics.AddOrUpdate(t => t.Id,
-                new Topic { Id = 1, Message = "Comment je peux réinitialiser mon mot de passe?" },
-                new Topic { Id = 2, Message = "Je n'ai pas reçu l'email de confirmation." });
+                new Topic { Id = 1, Title = "Comment je peux réinitialiser mon mot de passe?" },
+                new Topic { Id = 2, Title = "Je n'ai pas reçu l'email de confirmation." });
 
             context.Comments.AddOrUpdate(c => c.Id,
                 new Comment { TopicId = 1, Message = "Exemple de commentaire un..." },
-                new Comment { TopicId = 1, Message = "Commentaire..."},
+                new Comment { TopicId = 1, Message = "Commentaire..." },
                 new Comment { TopicId = 1, Message = "Exemple de commentaire 2..." },
                 new Comment { TopicId = 2, Message = "Commentaire Topic 2." });
         }
