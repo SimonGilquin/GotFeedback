@@ -7,7 +7,11 @@
   <p class="lead">Ask anything, get answers.</p>
 </div>
 
-<div class="">
-  @Html.ActionLink("Ask a question", "New", "Topics", null, new { @class = "btn btn-primary" })
-  @Html.ActionLink("Browse active questions", "Index", "Topics", null, new { @class = "btn btn-primary" })
+<div class="row">
+  <div class="col-md-4">
+    @Html.Action("New", "Topics")
+  </div>
+  <div class="col-md-4">
+    @Html.ActionLink("Browse active questions", "Index", "Topics", null, new { @class = "btn btn-primary" })
+  </div>
 </div>
