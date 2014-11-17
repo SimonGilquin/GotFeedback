@@ -25,24 +25,6 @@ namespace GotFeedback.Models
         }
     }
 
-    public class Comment
-    {
-        public int Id { get; set; }
-
-        public int TopicId { get; set; }
-
-        public string Message { get; set; }
-    }
-
-    public class Topic
-    {
-        public int Id { get; set; }
-
-        public string Message { get; set; }
-
-        public DateTime? CreatedDate { get; set; }
-    }
-
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
