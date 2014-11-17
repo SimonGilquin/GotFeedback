@@ -5,7 +5,9 @@
 @Scripts.Render("~/bundles/jqueryval")
 
 
-@using (Html.BeginForm("New", "Comments"))
+@using (Ajax.BeginForm("AjaxNew", "Comments", new AjaxOptions
+{
+            HttpMethod = "POST"}  ))
 {
     @Html.AntiForgeryToken()
 
@@ -31,6 +33,4 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+

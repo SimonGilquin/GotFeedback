@@ -33,7 +33,7 @@ namespace GotFeedback.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.Comments = db.Comments.Where(c => c.TopicId == topic.Id);
+         //   ViewBag.Comments = db.Comments.Where(c => c.TopicId == topic.Id);
 
             return View(topic);
         }

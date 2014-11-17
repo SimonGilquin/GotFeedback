@@ -1,0 +1,13 @@
+﻿@using GotFeedback.Models
+@model GotFeedback.Models.Topic
+
+@foreach (Comment item in Model.Comments)
+{
+    <p>@item.Message</p>
+}
+
+<p>
+    @Html.ActionLink("New comment", "New", "Comments")
+</p>
+
+@Html.Partial("~/Views/Comments/_NewComment.cshtml", new Comment { TopicId = Model.Id })
