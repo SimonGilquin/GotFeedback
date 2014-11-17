@@ -1,11 +1,10 @@
 ﻿using GotFeedback.Core;
-using GotFeedback.Services;
 
 namespace GotFeedback
 {
-    public class Bootstrapper
+    public static class Bootstrapper
     {
-              private static readonly object Obj = new object();
+        private static readonly object Obj = new object();
         private static bool IsInitialized { get; set; }
 
         public static void Initialize()
@@ -17,8 +16,6 @@ namespace GotFeedback
             }
 
             var uca = new UnityContainerAdapter();
-            uca.RegisterType<IUserService, UserService>();
-            uca.RegisterType<IGotFeedbackService, GotFeedbackService>();
 
             DependencyContainer.Set(uca);
         }
