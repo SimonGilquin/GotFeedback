@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+
+</head>
+<body>
+    <button id="dialog_trigger">open the dialog</button>
+    <div id="dialog" style="display:none;" title="Dialog Title"><iframe frameborder="0" scrolling="no" width="700" height="700" src="http://gotfeedback.azurewebsites.net/Home/About"></iframe></div>
+    <script>
+        $("#dialog_trigger").click(function () {
+            $("#dialog").dialog("open");
+        });
+        $("#dialog").dialog({
+            autoOpen: false,
+            position: 'center',
+            title: 'EDIT',
+            draggable: false,
+            width: 800,
+            height: 700,
+            resizable: true,
+            modal: true,
+        });
+    </script>
+
+
+</body>
+</html>
