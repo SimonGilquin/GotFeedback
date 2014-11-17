@@ -207,6 +207,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TopicsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -215,6 +216,10 @@
     <Compile Include="Migrations\201411171233305_ModelV1.cs" />
     <Compile Include="Migrations\201411171233305_ModelV1.Designer.cs">
       <DependentUpon>201411171233305_ModelV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411171426500_ModelV2.cs" />
+    <Compile Include="Migrations\201411171426500_ModelV2.Designer.cs">
+      <DependentUpon>201411171426500_ModelV2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -291,6 +296,11 @@
     <Content Include="Views\Topics\Details.cshtml" />
     <Content Include="Views\Topics\Edit.cshtml" />
     <Content Include="Views\Topics\Index.cshtml" />
+    <Content Include="Views\Comments\New.cshtml" />
+    <Content Include="Views\Comments\Delete.cshtml" />
+    <Content Include="Views\Comments\Details.cshtml" />
+    <Content Include="Views\Comments\Edit.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Scripts\_extensions.js" />
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +314,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201411171233305_ModelV1.resx">
       <DependentUpon>201411171233305_ModelV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411171426500_ModelV2.resx">
+      <DependentUpon>201411171426500_ModelV2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
