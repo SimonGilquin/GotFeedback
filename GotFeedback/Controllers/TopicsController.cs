@@ -65,7 +65,7 @@ namespace GotFeedback.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<ActionResult> New([Bind(Include = "Id,Title,CreatedDate")] Topic topic)
+        public async Task<ActionResult> New([Bind(Include = "Id,Title,CreatedDate,Category")] Topic topic)
         {
             if (ModelState.IsValid)
             {

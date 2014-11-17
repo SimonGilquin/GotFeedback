@@ -39,7 +39,7 @@
       @using (Html.BeginForm("New", "Topics", FormMethod.Post, new { @class = "" }))
       {
         @Html.AntiForgeryToken()
-        @Html.Hidden("Category", TopicCategory.Idea)
+        @Html.Hidden("Category", TopicCategory.Bug)
 
         <div class="">
           @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -58,7 +58,7 @@
       @using (Html.BeginForm("New", "Topics", FormMethod.Post, new { @class = "" }))
       {
         @Html.AntiForgeryToken()
-        @Html.Hidden("Category", TopicCategory.Idea)
+        @Html.Hidden("Category", TopicCategory.Question)
 
         <div class="">
           @Html.ValidationSummary(true, "", new { @class = "text-danger" })
