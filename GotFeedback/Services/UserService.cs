@@ -2,7 +2,13 @@
 
 namespace GotFeedback.Services
 {
-    public class UserService
+    public interface IUserService
+    {
+        User Get(string userId);
+        User GetByEmail(string email);
+    }
+
+    public class UserService : IUserService
     {
         public User Get(string userId)
         {
