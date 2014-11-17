@@ -229,6 +229,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <None Include="Properties\PublishProfiles\GotFeedback.pubxml" />
     <Content Include="HtmlPage1.html" />
+    <Content Include="img\logo_transparent.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\gotfeedback.js" />

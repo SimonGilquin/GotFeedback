@@ -230,3 +230,9 @@ fieldset[disabled] .nav-tabs .nav-danger.active {
   color: #d9534f;
   background-color: #fff;
 }
+
+
+.app-logo {
+    width: 208px;
+    margin-top: -17px;
+}
