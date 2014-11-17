@@ -1,0 +1,28 @@
+﻿@if (!string.IsNullOrWhiteSpace(TempData["SuccessMessage"] as string))
+{
+  <div class="alert alert-success" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    @TempData["SuccessMessage"]
+  </div>
+}
+@if (!string.IsNullOrWhiteSpace(TempData["InfoMessage"] as string))
+{
+  <div class="alert alert-info" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    @TempData["InfoMessage"]
+  </div>
+}
+@if (!string.IsNullOrWhiteSpace(TempData["WarningMessage"] as string))
+{
+  <div class="alert alert-warning" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    @TempData["WarningMessage"]
+  </div>
+}
+@if (!string.IsNullOrWhiteSpace(TempData["ErrorMessage"] as string))
+{
+  <div class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    @TempData["ErrorMessage"]
+  </div>
+}
