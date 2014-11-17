@@ -20,12 +20,12 @@ namespace GotFeedback
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/javascript").Include(
-                      "~/Scripts/semantic.js",
+                      "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/gotfeedback.js"));
 
             bundles.Add(new StyleBundle("~/css").Include(
-                      "~/Content/semantic.css",
+                      "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,

@@ -31,18 +31,18 @@ namespace GotFeedback.Controllers
             return View(topic);
         }
 
-        // GET: Topics/Create
-        public ActionResult Create()
+        // GET: Topics/New
+        public ActionResult New()
         {
             return View();
         }
 
-        // POST: Topics/Create
+        // POST: Topics/New
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Message,CreatedDate")] Topic topic)
+        public async Task<ActionResult> New([Bind(Include = "Id,Title,CreatedDate")] Topic topic)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace GotFeedback.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Message,CreatedDate")] Topic topic)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,CreatedDate")] Topic topic)
         {
             if (ModelState.IsValid)
             {
