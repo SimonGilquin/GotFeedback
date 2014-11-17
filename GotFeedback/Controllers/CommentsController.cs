@@ -31,19 +31,19 @@ namespace GotFeedback.Controllers
             return View(comment);
         }
 
-        // GET: Comments/Create
+        // GET: Comments/New
 
-        public ActionResult Create()
+        public ActionResult New()
         {
             return View();
         }
 
-        // POST: Comments/Create
+        // POST: Comments/New
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,TopicId,Message")] Comment comment)
+        public async Task<ActionResult> New([Bind(Include = "Id,TopicId,Message")] Comment comment)
         {
             if (ModelState.IsValid)
             {

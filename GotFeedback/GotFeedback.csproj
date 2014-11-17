@@ -217,6 +217,10 @@
     <Compile Include="Migrations\201411171233305_ModelV1.Designer.cs">
       <DependentUpon>201411171233305_ModelV1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201411171426500_ModelV2.cs" />
+    <Compile Include="Migrations\201411171426500_ModelV2.Designer.cs">
+      <DependentUpon>201411171426500_ModelV2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -292,7 +296,7 @@
     <Content Include="Views\Topics\Details.cshtml" />
     <Content Include="Views\Topics\Edit.cshtml" />
     <Content Include="Views\Topics\Index.cshtml" />
-    <Content Include="Views\Comments\Create.cshtml" />
+    <Content Include="Views\Comments\New.cshtml" />
     <Content Include="Views\Comments\Delete.cshtml" />
     <Content Include="Views\Comments\Details.cshtml" />
     <Content Include="Views\Comments\Edit.cshtml" />
@@ -310,6 +314,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201411171233305_ModelV1.resx">
       <DependentUpon>201411171233305_ModelV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411171426500_ModelV2.resx">
+      <DependentUpon>201411171426500_ModelV2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
