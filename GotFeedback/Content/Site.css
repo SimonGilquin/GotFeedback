@@ -18,3 +18,215 @@ textarea {
 .the-fix {
     padding-right: 10px;
 }
+
+.nav-tabs .nav-primary {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+.nav-tabs .nav-primary:hover,
+.nav-tabs .nav-primary:focus,
+.nav-tabs .nav-primary.focus,
+.nav-tabs .nav-primary:active,
+.nav-tabs .active .nav-primary,
+.nav-tabs > li.active a.nav-primary:focus,
+.nav-tabs > li.active a.nav-primary:hover{
+  color: #fff;
+  background-color: #286090;
+  border-color: #204d74;
+}
+.nav-tabs .nav-primary:active,
+.nav-tabs .nav-primary.active{
+  background-image: none;
+}
+.nav-tabs .nav-primary .badge {
+  color: #337ab7;
+  background-color: #fff;
+}
+.nav-tabs .nav-success {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.nav-tabs .nav-success:hover,
+.nav-tabs .nav-success:focus,
+.nav-tabs .nav-success.focus,
+.nav-tabs .nav-success:active,
+.nav-tabs .active .nav-success,
+.nav-tabs > li.active a.nav-success:focus,
+.nav-tabs > li.active a.nav-success:hover{
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+.nav-tabs .nav-success:active,
+.nav-tabs .nav-success.active,
+.open > .dropdown-toggle.nav-tabs .nav-success {
+  background-image: none;
+}
+.nav-tabs .nav-success.disabled,
+.nav-tabs .nav-success[disabled],
+fieldset[disabled] .nav-tabs .nav-success,
+.nav-tabs .nav-success.disabled:hover,
+.nav-tabs .nav-success[disabled]:hover,
+fieldset[disabled] .nav-tabs .nav-success:hover,
+.nav-tabs .nav-success.disabled:focus,
+.nav-tabs .nav-success[disabled]:focus,
+fieldset[disabled] .nav-tabs .nav-success:focus,
+.nav-tabs .nav-success.disabled.focus,
+.nav-tabs .nav-success[disabled].focus,
+fieldset[disabled] .nav-tabs .nav-success.focus,
+.nav-tabs .nav-success.disabled:active,
+.nav-tabs .nav-success[disabled]:active,
+fieldset[disabled] .nav-tabs .nav-success:active,
+.nav-tabs .nav-success.disabled.active,
+.nav-tabs .nav-success[disabled].active,
+fieldset[disabled] .nav-tabs .nav-success.active {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.nav-tabs .nav-success .badge {
+  color: #5cb85c;
+  background-color: #fff;
+}
+.nav-tabs .nav-info {
+  color: #fff;
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+.nav-tabs .nav-info:hover,
+.nav-tabs .nav-info:focus,
+.nav-tabs .nav-info.focus,
+.nav-tabs .nav-info:active,
+.nav-tabs .nav-info.active,
+.nav-tabs .active .nav-info,
+.nav-tabs > li.active a.nav-info:focus,
+.nav-tabs > li.active a.nav-info:hover{
+  color: #fff;
+  background-color: #31b0d5;
+  border-color: #269abc;
+}
+.nav-tabs .nav-info:active,
+.nav-tabs .nav-info.active,
+.open > .dropdown-toggle.nav-tabs .nav-info {
+  background-image: none;
+}
+.nav-tabs .nav-info.disabled,
+.nav-tabs .nav-info[disabled],
+fieldset[disabled] .nav-tabs .nav-info,
+.nav-tabs .nav-info.disabled:hover,
+.nav-tabs .nav-info[disabled]:hover,
+fieldset[disabled] .nav-tabs .nav-info:hover,
+.nav-tabs .nav-info.disabled:focus,
+.nav-tabs .nav-info[disabled]:focus,
+fieldset[disabled] .nav-tabs .nav-info:focus,
+.nav-tabs .nav-info.disabled.focus,
+.nav-tabs .nav-info[disabled].focus,
+fieldset[disabled] .nav-tabs .nav-info.focus,
+.nav-tabs .nav-info.disabled:active,
+.nav-tabs .nav-info[disabled]:active,
+fieldset[disabled] .nav-tabs .nav-info:active,
+.nav-tabs .nav-info.disabled.active,
+.nav-tabs .nav-info[disabled].active,
+fieldset[disabled] .nav-tabs .nav-info.active {
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+.nav-tabs .nav-info .badge {
+  color: #5bc0de;
+  background-color: #fff;
+}
+.nav-tabs .nav-warning {
+  color: #fff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+.nav-tabs .nav-warning:hover,
+.nav-tabs .nav-warning:focus,
+.nav-tabs .nav-warning.focus,
+.nav-tabs .nav-warning:active,
+.nav-tabs .nav-warning.active,
+.nav-tabs .active .nav-warning,
+.nav-tabs > li.active a.nav-warning:focus,
+.nav-tabs > li.active a.nav-warning:hover{
+  color: #fff;
+  background-color: #ec971f;
+  border-color: #d58512;
+}
+.nav-tabs .nav-warning:active,
+.nav-tabs .nav-warning.active,
+.open > .dropdown-toggle.nav-tabs .nav-warning {
+  background-image: none;
+}
+.nav-tabs .nav-warning.disabled,
+.nav-tabs .nav-warning[disabled],
+fieldset[disabled] .nav-tabs .nav-warning,
+.nav-tabs .nav-warning.disabled:hover,
+.nav-tabs .nav-warning[disabled]:hover,
+fieldset[disabled] .nav-tabs .nav-warning:hover,
+.nav-tabs .nav-warning.disabled:focus,
+.nav-tabs .nav-warning[disabled]:focus,
+fieldset[disabled] .nav-tabs .nav-warning:focus,
+.nav-tabs .nav-warning.disabled.focus,
+.nav-tabs .nav-warning[disabled].focus,
+fieldset[disabled] .nav-tabs .nav-warning.focus,
+.nav-tabs .nav-warning.disabled:active,
+.nav-tabs .nav-warning[disabled]:active,
+fieldset[disabled] .nav-tabs .nav-warning:active,
+.nav-tabs .nav-warning.disabled.active,
+.nav-tabs .nav-warning[disabled].active,
+fieldset[disabled] .nav-tabs .nav-warning.active {
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+.nav-tabs .nav-warning .badge {
+  color: #f0ad4e;
+  background-color: #fff;
+}
+.nav-tabs .nav-danger {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.nav-tabs .nav-danger:hover,
+.nav-tabs .nav-danger:focus,
+.nav-tabs .nav-danger.focus,
+.nav-tabs .nav-danger:active,
+.nav-tabs .nav-danger.active,
+.nav-tabs .active .nav-danger,
+.nav-tabs > li.active a.nav-danger:focus,
+.nav-tabs > li.active a.nav-danger:hover{
+  color: #fff;
+  background-color: #c9302c;
+  border-color: #ac2925;
+}
+.nav-tabs .nav-danger:active,
+.nav-tabs .nav-danger.active,
+.open > .dropdown-toggle.nav-tabs .nav-danger {
+  background-image: none;
+}
+.nav-tabs .nav-danger.disabled,
+.nav-tabs .nav-danger[disabled],
+fieldset[disabled] .nav-tabs .nav-danger,
+.nav-tabs .nav-danger.disabled:hover,
+.nav-tabs .nav-danger[disabled]:hover,
+fieldset[disabled] .nav-tabs .nav-danger:hover,
+.nav-tabs .nav-danger.disabled:focus,
+.nav-tabs .nav-danger[disabled]:focus,
+fieldset[disabled] .nav-tabs .nav-danger:focus,
+.nav-tabs .nav-danger.disabled.focus,
+.nav-tabs .nav-danger[disabled].focus,
+fieldset[disabled] .nav-tabs .nav-danger.focus,
+.nav-tabs .nav-danger.disabled:active,
+.nav-tabs .nav-danger[disabled]:active,
+fieldset[disabled] .nav-tabs .nav-danger:active,
+.nav-tabs .nav-danger.disabled.active,
+.nav-tabs .nav-danger[disabled].active,
+fieldset[disabled] .nav-tabs .nav-danger.active {
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.nav-tabs .nav-danger .badge {
+  color: #d9534f;
+  background-color: #fff;
+}
