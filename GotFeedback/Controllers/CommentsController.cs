@@ -16,6 +16,7 @@ namespace GotFeedback.Controllers
         public ActionResult Index(int id)
         {
             var result = db.Comments.Where(c => c.TopicId == id).ToList();
+            ViewBag.TopicId = id;
             return ControllerContext.IsChildAction ? (ActionResult)PartialView(result) : View(result);
         }
 
