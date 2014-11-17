@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.Routing;
 using GotFeedback.Models;
 
 namespace GotFeedback.Controllers
@@ -45,7 +46,7 @@ namespace GotFeedback.Controllers
                 db.Comments.Add(comment);
                 await db.SaveChangesAsync();
 
-                return new EmptyResult();
+                return RedirectToAction("Details", "Topics", new {id = comment.TopicId});
             }
 
             return new EmptyResult();
