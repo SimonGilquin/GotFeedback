@@ -1,3 +1,5 @@
+using GotFeedback.Models;
+
 namespace GotFeedback.Migrations
 {
     using System;
@@ -27,6 +29,10 @@ namespace GotFeedback.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            context.Topics.AddOrUpdate(t => t.Id,
+                new Topic { Title = "Comment je peux réinitialiser mon mot de passe?" },
+                new Topic { Title = "Je n'ai pas reçu l'email de confirmation." });
         }
     }
 }

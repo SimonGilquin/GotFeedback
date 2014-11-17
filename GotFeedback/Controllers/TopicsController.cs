@@ -34,7 +34,7 @@ namespace GotFeedback.Controllers
         // GET: Topics/New
         public ActionResult New()
         {
-            return View();
+            return ControllerContext.IsChildAction ? (ActionResult)PartialView() : View();
         }
 
         // POST: Topics/New
@@ -50,7 +50,6 @@ namespace GotFeedback.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-
             return View(topic);
         }
 
