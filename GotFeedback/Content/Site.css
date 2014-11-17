@@ -8,3 +8,13 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+
+textarea {
+    width: 100%;
+    border: 1px solid #333;
+    padding: 4px;
+}
+
+.the-fix {
+    padding-right: 10px;
+}
