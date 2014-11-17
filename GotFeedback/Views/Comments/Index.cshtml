@@ -27,10 +27,8 @@
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>
-    }
-    
-    @*<p>
-        @Html.ActionLink("Create New", "New")
-    </p>*@  
+    }   
+
+    @Html.Partial("~/Views/Comments/_NewComment.cshtml", new Comment { TopicId = ViewBag.TopicId })
 
 </table>
