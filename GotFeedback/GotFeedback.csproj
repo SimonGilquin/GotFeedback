@@ -226,29 +226,22 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\semantic.css" />
-    <Content Include="Content\semantic.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\basic.icons.svg" />
-    <Content Include="fonts\icons.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="images\loader-large-inverted.gif" />
-    <Content Include="images\loader-large.gif" />
-    <Content Include="images\loader-medium-inverted.gif" />
-    <Content Include="images\loader-medium.gif" />
-    <Content Include="images\loader-mini-inverted.gif" />
-    <Content Include="images\loader-mini.gif" />
-    <Content Include="images\loader-small-inverted.gif" />
-    <Content Include="images\loader-small.gif" />
-    <Content Include="fonts\basic.icons.eot" />
-    <Content Include="fonts\basic.icons.ttf" />
-    <Content Include="fonts\basic.icons.woff" />
-    <Content Include="fonts\icons.eot" />
-    <Content Include="fonts\icons.otf" />
-    <Content Include="fonts\icons.ttf" />
-    <Content Include="fonts\icons.woff" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <None Include="Properties\PublishProfiles\GotFeedback.pubxml" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\gotfeedback.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
@@ -264,8 +257,6 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\semantic.js" />
-    <Content Include="Scripts\semantic.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -296,7 +287,7 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Topics\Create.cshtml" />
+    <Content Include="Views\Topics\New.cshtml" />
     <Content Include="Views\Topics\Delete.cshtml" />
     <Content Include="Views\Topics\Details.cshtml" />
     <Content Include="Views\Topics\Edit.cshtml" />
@@ -306,6 +297,7 @@
     <Content Include="Views\Comments\Details.cshtml" />
     <Content Include="Views\Comments\Edit.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Scripts\_extensions.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -334,7 +326,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2153</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

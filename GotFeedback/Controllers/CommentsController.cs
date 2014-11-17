@@ -1,6 +1,4 @@
-﻿using System;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
@@ -8,113 +6,112 @@ using GotFeedback.Models;
 
 namespace GotFeedback.Controllers
 {
-    public class TopicsController : Controller
+    public class CommentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Topics
+        // GET: Comments
         public async Task<ActionResult> Index()
         {
-            return View(await db.Topics.ToListAsync());
+            return View(await db.Comments.ToListAsync());
         }
 
-        // GET: Topics/Details/5
+        // GET: Comments/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            Topic topic = await db.Topics.FindAsync(id);
-
-            if (topic == null)
+            Comment comment = await db.Comments.FindAsync(id);
+            if (comment == null)
             {
                 return HttpNotFound();
             }
-
-            ViewBag.Comments = db.Comments.Where(c => c.TopicId == topic.Id);
-
-            return View(topic);
+            return View(comment);
         }
 
-        // GET: Topics/New
-        public ActionResult New()
+        // GET: Comments/Create
+        public ActionResult Create()
         {
-            return ControllerContext.IsChildAction ? (ActionResult)PartialView() : View();
+            return View();
         }
 
-        // POST: Topics/New
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Comments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Message,CreatedDate")] Topic topic)
+        public async Task<ActionResult> Create([Bind(Include = "Id,TopicId,Message")] Comment comment)
         {
             if (ModelState.IsValid)
             {
-                topic.CreatedDate = DateTime.Now;
-
-                db.Topics.Add(topic);
+                db.Comments.Add(comment);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(topic);
+
+            return View(comment);
         }
 
-        // GET: Topics/Edit/5
+        // GET: Comments/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Topic topic = await db.Topics.FindAsync(id);
-            if (topic == null)
+            Comment comment = await db.Comments.FindAsync(id);
+            if (comment == null)
             {
                 return HttpNotFound();
             }
-            return View(topic);
+            return View(comment);
         }
 
-        // POST: Topics/Edit/5
+        // POST: Comments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,CreatedDate")] Topic topic)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,TopicId,Message")] Comment comment)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(topic).State = EntityState.Modified;
+                db.Entry(comment).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(topic);
+            return View(comment);
         }
 
-        // GET: Topics/Delete/5
+        // GET: Comments/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Topic topic = await db.Topics.FindAsync(id);
-            if (topic == null)
+            Comment comment = await db.Comments.FindAsync(id);
+            if (comment == null)
             {
                 return HttpNotFound();
             }
-            return View(topic);
+            return View(comment);
         }
 
-        // POST: Topics/Delete/5
+        // POST: Comments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Topic topic = await db.Topics.FindAsync(id);
-            db.Topics.Remove(topic);
+            Comment comment = await db.Comments.FindAsync(id);
+            db.Comments.Remove(comment);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

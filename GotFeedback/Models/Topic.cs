@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace GotFeedback.Models
 {
@@ -6,7 +7,8 @@ namespace GotFeedback.Models
     {
         public int Id { get; set; }
 
-        public string Message { get; set; }
+        [Required]
+        public string Title { get; set; }
 
         public DateTime? CreatedDate { get; set; }
     }

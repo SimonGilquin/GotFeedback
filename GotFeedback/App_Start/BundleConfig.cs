@@ -12,7 +12,8 @@ namespace GotFeedback
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/_extensions.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -20,12 +21,12 @@ namespace GotFeedback
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/javascript").Include(
-                      "~/Scripts/semantic.js",
+                      "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/gotfeedback.js"));
 
             bundles.Add(new StyleBundle("~/css").Include(
-                      "~/Content/semantic.css",
+                      "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,
