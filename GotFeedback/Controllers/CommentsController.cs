@@ -32,10 +32,6 @@ namespace GotFeedback.Controllers
         }
 
         // GET: Comments/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
         public ActionResult Create()
         {
