@@ -21,7 +21,8 @@ namespace GotFeedback
 
             bundles.Add(new ScriptBundle("~/javascript").Include(
                       "~/Scripts/semantic.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/gotfeedback.js"));
 
             bundles.Add(new StyleBundle("~/css").Include(
                       "~/Content/semantic.css",
@@ -29,7 +30,7 @@ namespace GotFeedback
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
-            BundleTable.EnableOptimizations = true;
+            //BundleTable.EnableOptimizations = true;
         }
     }
 }
