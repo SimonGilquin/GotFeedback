@@ -5,6 +5,10 @@
 }
 
 <h2>@Model.Category by @Model.Username</h2>
+@if (Model.GravatarUrl != null)
+{
+    <img src="@Model.GravatarUrl"/>
+}
 
 <div>
   <h3>
