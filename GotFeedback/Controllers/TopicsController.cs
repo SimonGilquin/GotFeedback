@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
@@ -35,22 +37,31 @@ namespace GotFeedback.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var topic = await db.Topics.Select(t=>new TopicDetails
+            var topic = await db.Topics.Select(t=>new
             {
-                Id = t.Id,
-                Category = t.Category,
-                CreatedDate = t.CreatedDate,
-                Username = t.User.UserName
-            }).SingleOrDefaultAsync(t=>t.Id==id);
+                Details = new TopicDetails
+                {
+                    Id = t.Id,
+                    Category = t.Category,
+                    CreatedDate = t.CreatedDate,
+                    Username = t.User.UserName
+                },
+                Email = t.User.Email
+            }).SingleOrDefaultAsync(t=>t.Details.Id==id);
 
             if (topic == null)
             {
                 return HttpNotFound();
             }
 
+            topic.Details.GravatarUrl = string.Format("http://www.gravatar.com/avatar/{0}",
+                BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(topic.Email.ToLowerInvariant())))
+                    .Replace("-", "")
+                    .ToLowerInvariant());
+
          //   ViewBag.Comments = db.Comments.Where(c => c.TopicId == topic.Id);
 
-            return View(topic);
+            return View(topic.Details);
         }
 
         // GET: Topics/New

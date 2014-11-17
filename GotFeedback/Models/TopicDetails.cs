@@ -15,9 +15,6 @@ namespace GotFeedback.Models
         public DateTime CreatedDate { get; set; }
         public string Username { get; set; }
 
-        public string GravatarUrl
-        {
-            get { return Username == null ? null : string.Format("http://www.gravatar.com/avatar/{0}", BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(Username.ToLowerInvariant()))).Replace("-", "").ToLowerInvariant()); }
-        }
+        public string GravatarUrl { get; set; }
     }
 }

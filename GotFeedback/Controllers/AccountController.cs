@@ -57,7 +57,9 @@ namespace GotFeedback.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(model.Email, model.Password);
+                var user = await UserManager.FindAsync(model.Username, model.Password);
+                if (user == null)
+                    user = await UserManager.FindByEmailAsync(model.Username);
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
@@ -90,7 +92,7 @@ namespace GotFeedback.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser() { UserName = model.Username, Email = model.Email };
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
