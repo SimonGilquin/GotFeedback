@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
@@ -23,11 +25,16 @@ namespace GotFeedback.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Topic topic = await db.Topics.FindAsync(id);
+
             if (topic == null)
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Comments = db.Comments.Where(c => c.TopicId == topic.Id);
+
             return View(topic);
         }
 
@@ -42,10 +49,12 @@ namespace GotFeedback.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Message,CreatedDate")] Topic topic)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Message")] Topic topic)
         {
             if (ModelState.IsValid)
             {
+                topic.CreatedDate = DateTime.Now;
+
                 db.Topics.Add(topic);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

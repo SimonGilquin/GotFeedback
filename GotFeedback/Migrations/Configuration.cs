@@ -19,20 +19,15 @@ namespace GotFeedback.Migrations
         {
             //  This method will be called after migrating to the latest version.
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
-
             context.Topics.AddOrUpdate(t => t.Id,
-                new Topic { Message = "Comment je peux réinitialiser mon mot de passe?" },
-                new Topic { Message = "Je n'ai pas reçu l'email de confirmation." });
+                new Topic { Id = 1, Message = "Comment je peux réinitialiser mon mot de passe?" },
+                new Topic { Id = 2, Message = "Je n'ai pas reçu l'email de confirmation." });
+
+            context.Comments.AddOrUpdate(c => c.Id,
+                new Comment { TopicId = 1, Message = "Exemple de commentaire un..." },
+                new Comment { TopicId = 1, Message = "Commentaire..."},
+                new Comment { TopicId = 1, Message = "Exemple de commentaire 2..." },
+                new Comment { TopicId = 2, Message = "Commentaire Topic 2." });
         }
     }
 }
