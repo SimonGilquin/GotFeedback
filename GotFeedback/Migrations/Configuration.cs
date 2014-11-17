@@ -13,6 +13,7 @@ namespace GotFeedback.Migrations
         {
             AutomaticMigrationsEnabled = true;
             ContextKey = "GotFeedback.Models.ApplicationDbContext";
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(GotFeedback.Models.ApplicationDbContext context)
