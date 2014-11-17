@@ -34,12 +34,4 @@
     @Html.ActionLink("Back to List", "Index")
 </p>         
 
-@foreach (Comment item in ViewBag.Comments)
-{
-    
-    <p>@item.Message</p>
-}         
-    
-<p>
-    @Html.ActionLink("New comment","New","Comments")
-</p>
+@Html.Partial("~/Views/Comments/_CommentsList.cshtml", Model)

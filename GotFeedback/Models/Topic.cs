@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace GotFeedback.Models
@@ -11,5 +12,7 @@ namespace GotFeedback.Models
         public string Title { get; set; }
 
         public DateTime? CreatedDate { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; } 
     }
 }

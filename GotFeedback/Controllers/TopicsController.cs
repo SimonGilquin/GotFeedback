@@ -33,7 +33,7 @@ namespace GotFeedback.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.Comments = db.Comments.Where(c => c.TopicId == topic.Id);
+         //   ViewBag.Comments = db.Comments.Where(c => c.TopicId == topic.Id);
 
             return View(topic);
         }
@@ -49,7 +49,7 @@ namespace GotFeedback.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Message,CreatedDate")] Topic topic)
+        public async Task<ActionResult> New([Bind(Include = "Id,Message,CreatedDate")] Topic topic)
         {
             if (ModelState.IsValid)
             {

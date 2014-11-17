@@ -35,7 +35,20 @@ namespace GotFeedback.Controllers
 
         public ActionResult New()
         {
-            return View();
+            return ControllerContext.IsChildAction ? (ActionResult)PartialView() : View();
+        }
+
+        public async Task<ActionResult> AjaxNew([Bind(Include = "Id,TopicId,Message")] Comment comment)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Comments.Add(comment);
+                await db.SaveChangesAsync();
+
+                return new EmptyResult();
+            }
+
+            return new EmptyResult();
         }
 
         // POST: Comments/New
@@ -49,6 +62,7 @@ namespace GotFeedback.Controllers
             {
                 db.Comments.Add(comment);
                 await db.SaveChangesAsync();
+
                 return RedirectToAction("Index");
             }
 
