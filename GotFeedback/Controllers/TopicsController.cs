@@ -49,7 +49,7 @@ namespace GotFeedback.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> New([Bind(Include = "Id,Message,CreatedDate")] Topic topic)
+        public async Task<ActionResult> New([Bind(Include = "Id,Title,CreatedDate")] Topic topic)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +57,9 @@ namespace GotFeedback.Controllers
 
                 db.Topics.Add(topic);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                TempData["SuccessMessage"] =
+                    "Your topic have been created. You can now add details to help the community help you.";
+                return RedirectToAction("Details", new { id = topic.Id });
             }
             return View(topic);
         }
