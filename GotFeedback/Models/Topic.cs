@@ -11,8 +11,19 @@ namespace GotFeedback.Models
         [Required]
         public string Title { get; set; }
 
-        public DateTime? CreatedDate { get; set; }
+        [Required]
+        public TopicCategory Category { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; set; } 
+        public DateTime CreatedDate { get; set; }
+        public ApplicationUser User { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
+    }
+
+    public enum TopicCategory
+    {
+        Idea,
+        Bug,
+        Question
     }
 }

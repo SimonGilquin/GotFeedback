@@ -1,37 +1,20 @@
-﻿@using GotFeedback.Models
-@model GotFeedback.Models.Topic
+﻿@model TopicDetails
 
 @{
-    ViewBag.Title = "Details";
+  ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>@Model.Category by @Model.Username</h2>
 
 <div>
-    <h4>Topic</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-
-    </dl>
+  <h3>
+    @Model.Title
+  </h3>
+  <h4><small>Submitted on @Model.CreatedDate</small></h4>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>         
+  @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+  @Html.ActionLink("Back to List", "Index")
+</p>
 
-@Html.Partial("~/Views/Comments/_CommentsList.cshtml", Model)
+@Html.Action("Index", "Comments", new { id = Model.Id })

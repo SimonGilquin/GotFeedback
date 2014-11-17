@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
@@ -11,9 +12,9 @@ namespace GotFeedback.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Comments
-        public async Task<ActionResult> Index()
+        public ActionResult Index(int id)
         {
-            return View(await db.Comments.ToListAsync());
+            return View(db.Comments.Where(c=>c.TopicId==id).ToList());
         }
 
         // GET: Comments/Details/5

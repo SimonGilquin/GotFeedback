@@ -5,12 +5,21 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
 using GotFeedback.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace GotFeedback.Controllers
 {
     public class TopicsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext db;
+        private readonly UserManager<ApplicationUser> userManager;
+
+        public TopicsController()
+        {
+            db = new ApplicationDbContext();
+            userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+        }
 
         // GET: Topics
         public async Task<ActionResult> Index()
@@ -26,7 +35,13 @@ namespace GotFeedback.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Topic topic = await db.Topics.FindAsync(id);
+            var topic = await db.Topics.Select(t=>new TopicDetails
+            {
+                Id = t.Id,
+                Category = t.Category,
+                CreatedDate = t.CreatedDate,
+                Username = t.User.UserName
+            }).SingleOrDefaultAsync(t=>t.Id==id);
 
             if (topic == null)
             {
@@ -49,11 +64,13 @@ namespace GotFeedback.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> New([Bind(Include = "Id,Title,CreatedDate")] Topic topic)
         {
             if (ModelState.IsValid)
             {
                 topic.CreatedDate = DateTime.Now;
+                topic.User = userManager.FindById(User.Identity.GetUserId()); ;
 
                 db.Topics.Add(topic);
                 await db.SaveChangesAsync();
