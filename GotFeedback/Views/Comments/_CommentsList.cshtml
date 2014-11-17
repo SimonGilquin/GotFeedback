@@ -6,4 +6,8 @@
     <p>@item.Message</p>
 }
 
+<p>
+    @Html.ActionLink("New comment", "New", "Comments")
+</p>
+
 @Html.Partial("~/Views/Comments/_NewComment.cshtml", new Comment { TopicId = Model.Id })

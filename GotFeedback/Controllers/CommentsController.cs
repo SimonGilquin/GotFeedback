@@ -45,10 +45,9 @@ namespace GotFeedback.Controllers
                 db.Comments.Add(comment);
                 await db.SaveChangesAsync();
 
-                //Todo : return what?
                 return new EmptyResult();
             }
-            //Todo : return what?
+
             return new EmptyResult();
         }
 
