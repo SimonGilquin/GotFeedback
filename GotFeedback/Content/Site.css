@@ -376,3 +376,7 @@ a.post-tag:hover, .post-text a.post-tag:hover, .wmd-preview a.post-tag:hover {
     color: #fff;
     background-color: #333;
 }
+
+.tags .label {
+    margin-right: 2px;   
+}

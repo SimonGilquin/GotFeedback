@@ -80,4 +80,12 @@
       });
     });
   });
+
+  $('.addlike').click(function(e) {
+    console.log('a');
+    var likes = $('.likes', this);
+    likes.text(parseInt(likes.text())+1);
+    e.preventDefault();
+    return false;
+  });
 });

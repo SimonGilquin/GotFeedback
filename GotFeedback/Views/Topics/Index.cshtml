@@ -59,8 +59,8 @@
             }
         </div>
       <div class="btn-group" role="group">
-        <div type="submit" class="btn btn-default" onclick="location.href='@Url.Action("AddLike", "Topics", new { id = item.Id })'">
-          (+@item.LikesCount)&nbsp;<i class="glyphicon glyphicon-thumbs-up"></i>
+        <div type="submit" class="btn btn-default addlike">
+          <span class="likes">@item.LikesCount</span>&nbsp;<i class="glyphicon glyphicon-thumbs-up"></i>
         </div>
         <div type="button" class="btn btn-default" onclick="location.href='@Url.Action("AddLike", "Topics")'">
           <i class="fa fa-question"></i>
