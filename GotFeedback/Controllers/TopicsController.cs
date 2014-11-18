@@ -76,10 +76,8 @@ namespace GotFeedback.Controllers
         }
 
         [HttpPost]
-        public void UpdateTagsCollection(Topic topic)
+        public async Task<ActionResult> UpdateTagsCollection(TopicDetails topic)
         {
-            if(topic == null) return;
-            
             var tags = topic.TagsLiteral.Split(',');
 
             foreach (var tag in tags)
@@ -90,7 +88,8 @@ namespace GotFeedback.Controllers
                 db.Tags.Add(newTag);
             }
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
+            return RedirectToAction("Details", topic.Id);
         }
 
         // GET: Topics/Details/5
@@ -192,12 +191,28 @@ namespace GotFeedback.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,CreatedDate")] Topic topic)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,CreatedDate,TagsLiteral")] Topic topic)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(topic).State = EntityState.Modified;
-                UpdateTagsCollection(topic);
+
+                var tagsCollection = db.Tags.Where(t => t.TopicId == topic.Id);
+                topic.Tags = tagsCollection.ToList();
+
+                if (topic.Tags != null)
+                {
+                    var tags = topic.TagsLiteral.Split(',');
+
+                    foreach (var tag in tags)
+                    {
+                        if (topic.Tags.Any(t => t.Label.Equals(tag, StringComparison.OrdinalIgnoreCase))) continue;
+
+                        Tag newTag = new Tag { TopicId = topic.Id, Label = tag };
+                        db.Tags.Add(newTag);
+                    }
+                }
+
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", new { topic.Id });
             }
