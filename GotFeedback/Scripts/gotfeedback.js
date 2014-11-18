@@ -61,10 +61,23 @@
     }
   });
 
-  $('body').on('click', 'a', function(e) {
-    window.location = $(this).attr('href');
-    e.preventDefault();
-    return false;
+  $('body').on('click', 'a', function (e) {
+    if ($(this).data('toggle')==='tab') {
+      return true;
+    } else {
+      window.location = $(this).attr('href');
+      e.preventDefault();
+      return false;
+    }
   });
 
+  $('#TagsForm').on('change', '#TagField', function (e) {
+    $.post('/Topics/AddTag', { label: $(this).val(), topicId: $('#TagsForm #TopicId').val() }).done(function (data, status, xhr) {
+      $('#TagField').val('');
+      $('#TagList').html('');
+      data.forEach(function(tag, i) {
+        $('#TagList').append('<span class="label label-default">'+tag.Label+'</span>');
+      });
+    });
+  });
 });

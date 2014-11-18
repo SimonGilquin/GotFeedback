@@ -85,8 +85,10 @@ namespace GotFeedback.Controllers
         }
 
         [HttpPost]
-        public async void UpdateTagsCollection(Topic topic)
+        public void UpdateTagsCollection(Topic topic)
         {
+            if(topic == null) return;
+            
             var tags = topic.TagsLiteral.Split(',');
 
             foreach (var tag in tags)
@@ -97,7 +99,18 @@ namespace GotFeedback.Controllers
                 db.Tags.Add(newTag);
             }
 
-            await db.SaveChangesAsync();
+            db.SaveChanges();
+        }
+
+        public JsonResult AddTag(int topicId, string label)
+        {
+            var topic = db.Topics.Include(t=>t.Tags).SingleOrDefault(t => t.Id == topicId);
+            if (topic == null)
+                return Json(404);
+
+            topic.Tags.Add(new Tag { Label = label, TopicId = topicId });
+            db.SaveChanges();
+            return Json(topic.Tags);
         }
 
         // GET: Topics/Details/5

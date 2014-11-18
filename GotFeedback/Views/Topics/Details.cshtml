@@ -20,22 +20,27 @@
     @if (Model.Tags != null)
     {
       <h4>Tags</h4>
-      <div class="tags">
+      <div class="tags" id="TagList">
         @foreach (var tag in Model.Tags)
         {
           <span class="label label-default">@tag.Label</span>
         }
       </div>
-      if (Model.IsOwner)
-      {
-        <div>
-          @Html.TextBoxFor(model => model.TagsLiteral, new { @id = "tags", @class = "form-control", required = "required", rows = 6 })
-        </div>
-      }
     }
   </div>
   @if (Model.IsOwner)
   {
+    if (Model.Tags != null)
+    {
+      <div class="col-md-6">
+        @using (Html.BeginForm("UpdateTagsCollection", "Topics", new { topic = Model }, FormMethod.Post, new { id = "TagsForm" }))
+        {
+          @Html.Hidden("TopicId", Model.Id)
+          @Html.TextBox("Tags", "", new { @id = "TagField", @class = "form-control" })
+        }
+      </div>
+    }
+
     <p>
       @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
     </p>
