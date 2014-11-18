@@ -25,10 +25,10 @@ namespace GotFeedback.Migrations
                 new Topic { Id = 2, Title = "Je n'ai pas reçu l'email de confirmation.", CreatedDate = DateTime.Now });
 
             context.Comments.AddOrUpdate(c => c.Id,
-                new Comment { TopicId = 1, Message = "Exemple de commentaire un..." },
-                new Comment { TopicId = 1, Message = "Commentaire..." },
-                new Comment { TopicId = 1, Message = "Exemple de commentaire 2..." },
-                new Comment { TopicId = 2, Message = "Commentaire Topic 2." });
+                new Comment { TopicId = 1, Message = "Exemple de commentaire un...", Date = DateTime.Now},
+                new Comment { TopicId = 1, Message = "Commentaire...", Date = DateTime.Now },
+                new Comment { TopicId = 1, Message = "Exemple de commentaire 2...", Date = DateTime.Now },
+                new Comment { TopicId = 2, Message = "Commentaire Topic 2.", Date = DateTime.Now });
         }
     }
 }

@@ -1,33 +1,27 @@
-﻿@model IEnumerable<GotFeedback.Models.Comment>
+﻿@model IEnumerable<Comment>
 
 
-<table class="table">
+<table class="table" id="TopicComments">
+  <tr>
+    <th>
+      @Html.DisplayNameFor(model => model.Message)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.Date)
+    </th>
+    <th></th>
+  </tr>
+
+  @foreach (var item in Model)
+  {
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TopicId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Message)
-        </th>
-        <th></th>
+      <td>
+        @Html.DisplayFor(modelItem => item.Message)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.Date)
+      </td>
+      <td></td>
     </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TopicId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Message)
-            </td>
-            @*<td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>*@
-        </tr>
-    }
-    @Html.Partial("~/Views/Comments/_NewComment.cshtml", new Comment { TopicId = ViewBag.TopicId })
-
+  }
 </table>

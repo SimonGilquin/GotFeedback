@@ -1,10 +1,6 @@
-﻿@using GotFeedback.Models
-@model GotFeedback.Models.Topic
+﻿@model Topic
 
 @foreach (Comment item in Model.Comments)
 {
     <p>@item.Message</p>
 }
-
-
-@Html.Partial("~/Views/Comments/_NewComment.cshtml", new Comment { TopicId = Model.Id })
