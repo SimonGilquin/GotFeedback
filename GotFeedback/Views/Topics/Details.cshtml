@@ -1,44 +1,51 @@
 ﻿@model TopicDetails
 
 @{
-  ViewBag.Title = "Details";
+    ViewBag.Title = "Details";
 }
 
 <div id="TopicDetails" class="">
-  <h2 class="topic-title">
-    @Model.Category by @(Model.IsOwner ? "you" : Model.Username)
-    @if (Model.GravatarUrl != null)
-    {
-      <img alt="@Model.Username" class="gravatar" src="@Model.GravatarUrl" />
-    }
-  </h2>
-  <div>
-    <h3>
-      @Model.Title
-    </h3>
-      <h4><small>Submitted on @Model.CreatedDate</small></h4>      
-      <h4>Tags</h4>
-      <div class="col-md-6">
-          <input type="text" id="tags">
-      </div>
-  </div>
-  <p>
-        @if (Model.IsOwner)
+    <h2 class="topic-title">
+        @Model.Category by @(Model.IsOwner ? "you" : string.IsNullOrWhiteSpace(Model.Username) ? "anonymous" : Model.Username)
+        @if (Model.GravatarUrl != null)
         {
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })<text> |</text>
+            <img alt="@Model.Username" class="gravatar" src="@Model.GravatarUrl" />
         }
+    </h2>
+    <div>
+        <h3>
+            @Model.Title
+        </h3>
+        <h4><small>Submitted on @Model.CreatedDate</small></h4>
+      
+    </div>
+    @if (Model.IsOwner)
+    {
+        if (Model.Tags != null)
+        {
+            <h4>Tags</h4>
+            <div class="col-md-6">
+                @using (Html.BeginForm("UpdateTagsCollection", "Topics", new { topic = Model }, FormMethod.Post, new { id = "tagsForm" }))
+                {
+                    @Html.TextBoxFor(model => model.TagsLiteral, new { @id = "tags", @class = "form-control", onchange = "javascript:document.getElementById('tagsForm').submit()" })
+                }
+            </div>
+        }
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+        </p>
+        using (Html.BeginForm("UploadImage", "Topics", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <p>
+                <b>Upload Image:</b><input type="file" name="file" class="btn btn-default" />
+                <input type="submit" value="Upload" class="btn btn-default" />
+
+            </p>
+        }
+    }
+    @Html.Partial("~/Views/Comments/_NewComment.cshtml", new Comment { TopicId = Model.Id })
+
+    @Html.Action("Index", "Comments", new { id = Model.Id })
+
     @Html.ActionLink("Back to List", "Index")
-  </p>
-  @using (Html.BeginForm("UploadImage", "Topics", FormMethod.Post,new { enctype = "multipart/form-data" }))
-  {
-    <p>
-      <b>Upload Image:</b><input type="file" name="file" class="btn btn-default" />
-      <input type="submit" value="Upload" class="btn btn-default" />
-                
-    </p>
-  }
-  @Html.Partial("~/Views/Comments/_NewComment.cshtml", new Comment { TopicId = Model.Id })
-
-  @Html.Action("Index", "Comments", new { id = Model.Id })
-
-</div>       
+</div>

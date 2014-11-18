@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography;
@@ -28,17 +29,68 @@ namespace GotFeedback.Controllers
             userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
 
-        public async Task<ActionResult> Index(TopicsOrderBy order = TopicsOrderBy.None)
+        public ActionResult Index(TopicsOrderBy order = TopicsOrderBy.None)
         {
+            var query = db.Topics.Select(t => new
+            {
+                Details = new TopicDetails
+                {
+                    Id = t.Id,
+                    Category = t.Category,
+                    CreatedDate = t.CreatedDate,
+                    Username = t.User.UserName,
+                    Title = t.Title,
+                    IsOwner = t.User.UserName == User.Identity.Name,
+                    ViewCount = t.ViewCount,
+                    LikesCount = t.LikesCount,
+                    TagLabels = t.Tags.Select(tag => tag.Label)
+                },
+                Email = t.User.Email,
+            });
             switch (order)
             {
                 case TopicsOrderBy.ViewCount:
-                    return View(await db.Topics.OrderByDescending(t => t.ViewCount).ToListAsync());
+                    query = query.OrderByDescending(t => t.Details.ViewCount);
+                    break;
                 case TopicsOrderBy.CreatedDate:
-                    return View(await db.Topics.OrderByDescending(t => t.CreatedDate).ToListAsync());
+                    query = query.OrderByDescending(t => t.Details.CreatedDate);
+                    break;
                 default:
-                    return View(await db.Topics.ToListAsync()); ;
+                    query = query.OrderByDescending(t => t.Details.CreatedDate);
+                    break;
             }
+            var topics = query.ToList().Select(t =>
+            {
+                var topic = t.Details;
+                if (t.Email != null)
+                {
+                    topic.GravatarUrl = string.Format("http://www.gravatar.com/avatar/{0}",
+                BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(t.Email.ToLowerInvariant())))
+                    .Replace("-", "")
+                    .ToLowerInvariant());
+
+                }
+                return topic;
+            }).ToList();
+            return ControllerContext.IsChildAction ? (ActionResult)PartialView(topics) : View(topics);
+        }
+
+        [HttpPost]
+        public void UpdateTagsCollection(Topic topic)
+        {
+            if(topic == null) return;
+            
+            var tags = topic.TagsLiteral.Split(',');
+
+            foreach (var tag in tags)
+            {
+                if (topic.Tags.Any(t => t.Label.Equals(tag, StringComparison.OrdinalIgnoreCase))) continue;
+
+                Tag newTag = new Tag { TopicId = topic.Id, Label = tag };
+                db.Tags.Add(newTag);
+            }
+
+            db.SaveChanges();
         }
 
         // GET: Topics/Details/5
@@ -52,6 +104,9 @@ namespace GotFeedback.Controllers
             var currentTopic = await db.Topics.SingleOrDefaultAsync(t => t.Id == id);
             if (currentTopic != null)
             {
+
+
+
                 currentTopic.ViewCount++;
                 db.Entry(currentTopic).State = EntityState.Modified;
                 await db.SaveChangesAsync();
@@ -66,7 +121,8 @@ namespace GotFeedback.Controllers
                     CreatedDate = t.CreatedDate,
                     Username = t.User.UserName,
                     Title = t.Title,
-                    IsOwner = t.User.UserName == User.Identity.Name
+                    IsOwner = t.User.UserName == User.Identity.Name,
+                    Tags = t.Tags.ToList()
                 },
                 Email = t.User.Email
             }).SingleOrDefaultAsync(t => t.Details.Id == id);
@@ -76,11 +132,14 @@ namespace GotFeedback.Controllers
                 return HttpNotFound();
             }
 
-            topic.Details.GravatarUrl = string.Format("http://www.gravatar.com/avatar/{0}",
-                BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(topic.Email.ToLowerInvariant())))
-                    .Replace("-", "")
-                    .ToLowerInvariant());
+            if (topic.Email != null)
+            {
+                topic.Details.GravatarUrl = string.Format("http://www.gravatar.com/avatar/{0}",
+            BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(topic.Email.ToLowerInvariant())))
+                .Replace("-", "")
+                .ToLowerInvariant());
 
+            }
 
             return View(topic.Details);
         }
@@ -138,6 +197,7 @@ namespace GotFeedback.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(topic).State = EntityState.Modified;
+                UpdateTagsCollection(topic);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", new { topic.Id });
             }
@@ -274,13 +334,13 @@ namespace GotFeedback.Controllers
             return RedirectToAction("Index", "Topics");
         }
 
-        [HttpPost, ActionName("Search")]
+        [ActionName("Search")]
         [ValidateAntiForgeryToken]
         [AcceptVerbs(HttpVerbs.Post)]
         public async Task<ActionResult> Search(FormCollection formCollection)
         {
             var searchString = formCollection["searchString"];
-            var topics =  await 
+            var topics = await
                 db.Topics.Where(t => t.Title.Contains(searchString)).ToListAsync();
 
             return View("Index", topics);
