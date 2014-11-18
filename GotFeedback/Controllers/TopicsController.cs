@@ -49,9 +49,12 @@ namespace GotFeedback.Controllers
             }
 
             var currentTopic = await db.Topics.SingleOrDefaultAsync(t => t.Id == id);
-            currentTopic.ViewCount++;
-            db.Entry(currentTopic).State = EntityState.Modified;
-            await db.SaveChangesAsync();
+            if (currentTopic != null)
+            {
+                currentTopic.ViewCount++;
+                db.Entry(currentTopic).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+            }
 
             var topic = await db.Topics.Select(t => new
             {
@@ -70,10 +73,10 @@ namespace GotFeedback.Controllers
                 return HttpNotFound();
             }
 
-            topic.Details.GravatarUrl = string.Format("http://www.gravatar.com/avatar/{0}",
-                BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(topic.Email.ToLowerInvariant())))
-                    .Replace("-", "")
-                    .ToLowerInvariant());
+            //topic.Details.GravatarUrl = string.Format("http://www.gravatar.com/avatar/{0}",
+            //    BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(topic.Email.ToLowerInvariant())))
+            //        .Replace("-", "")
+            //        .ToLowerInvariant());
 
 
             return View(topic.Details);
