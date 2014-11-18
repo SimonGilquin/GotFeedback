@@ -7,10 +7,11 @@
 
 <br />
 
-@using (Html.BeginForm("New", "Topics", FormMethod.Post, new { @class = "" }))
+@using (Html.BeginForm("Search", "Topics", FormMethod.Post, new { @class = "" }))
 {
+    @Html.AntiForgeryToken()
     <div class="input-group">
-        <input type="text" class="form-control" placeholder="search for a topic" required="required" />
+        <input type="text" name="searchString" class="form-control" placeholder="search for a topic" required="required" />
         <span class="input-group-btn">
             <input type="submit" value="Search" class="btn btn-primary" />
         </span>

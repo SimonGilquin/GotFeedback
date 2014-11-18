@@ -13,6 +13,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Configuration;
+using System.Web;
 
 namespace GotFeedback.Controllers
 {
@@ -178,8 +179,11 @@ namespace GotFeedback.Controllers
             base.Dispose(disposing);
         }
 
-        public void UploadImage(string file)
+        [HttpPost]
+        public void UploadImage(HttpPostedFileBase file)
         {
+            string filename = System.IO.Path.GetFileName(file.FileName.ToString());
+
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConfigurationManager.ConnectionStrings["StorageConnectionString"].ConnectionString);
 
             // Create the blob client.
@@ -192,7 +196,7 @@ namespace GotFeedback.Controllers
             CloudBlockBlob blockBlob = container.GetBlockBlobReference("myblob");
 
             // Create or overwrite the "myblob" blob with contents from a local file.
-            using (var fileStream = System.IO.File.OpenRead(file))
+            using (var fileStream = System.IO.File.OpenRead(filename))
             {
                 blockBlob.UploadFromStream(fileStream);
             }
@@ -269,6 +273,19 @@ namespace GotFeedback.Controllers
 
             return RedirectToAction("Index", "Topics");
         }
+
+        [HttpPost, ActionName("Search")]
+        [ValidateAntiForgeryToken]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public async Task<ActionResult> Search(FormCollection formCollection)
+        {
+            var searchString = formCollection["searchString"];
+            var topics =  await 
+                db.Topics.Where(t => t.Title.Contains(searchString)).ToListAsync();
+
+            return View("Index", topics);
+        }
+
     }
 
     public enum TopicsOrderBy
@@ -277,5 +294,6 @@ namespace GotFeedback.Controllers
         CreatedDate = 1,
         None = 2
     }
+
 }
 
