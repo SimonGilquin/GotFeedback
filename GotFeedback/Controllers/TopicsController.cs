@@ -41,6 +41,22 @@ namespace GotFeedback.Controllers
             }
         }
 
+        [HttpPost]
+        public async void UpdateTagsCollection(Topic topic)
+        {
+            var tags = topic.TagsLiteral.Split(',');
+
+            foreach (var tag in tags)
+            {
+                if (topic.Tags.Any(t => t.Label.Equals(tag, StringComparison.OrdinalIgnoreCase))) continue;
+
+                Tag newTag = new Tag { TopicId = topic.Id, Label = tag };
+                db.Tags.Add(newTag);
+            }
+
+            await db.SaveChangesAsync();
+        }
+
         // GET: Topics/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -52,6 +68,9 @@ namespace GotFeedback.Controllers
             var currentTopic = await db.Topics.SingleOrDefaultAsync(t => t.Id == id);
             if (currentTopic != null)
             {
+
+
+
                 currentTopic.ViewCount++;
                 db.Entry(currentTopic).State = EntityState.Modified;
                 await db.SaveChangesAsync();
@@ -66,7 +85,8 @@ namespace GotFeedback.Controllers
                     CreatedDate = t.CreatedDate,
                     Username = t.User.UserName,
                     Title = t.Title,
-                    IsOwner = t.User.UserName == User.Identity.Name
+                    IsOwner = t.User.UserName == User.Identity.Name,
+                    Tags = t.Tags.ToList()
                 },
                 Email = t.User.Email
             }).SingleOrDefaultAsync(t => t.Details.Id == id);
@@ -76,10 +96,10 @@ namespace GotFeedback.Controllers
                 return HttpNotFound();
             }
 
-            topic.Details.GravatarUrl = string.Format("http://www.gravatar.com/avatar/{0}",
-                BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(topic.Email.ToLowerInvariant())))
-                    .Replace("-", "")
-                    .ToLowerInvariant());
+            //topic.Details.GravatarUrl = string.Format("http://www.gravatar.com/avatar/{0}",
+            //    BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(topic.Email.ToLowerInvariant())))
+            //        .Replace("-", "")
+            //        .ToLowerInvariant());
 
 
             return View(topic.Details);
@@ -138,6 +158,7 @@ namespace GotFeedback.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(topic).State = EntityState.Modified;
+                UpdateTagsCollection(topic);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", new { topic.Id });
             }
@@ -280,7 +301,7 @@ namespace GotFeedback.Controllers
         public async Task<ActionResult> Search(FormCollection formCollection)
         {
             var searchString = formCollection["searchString"];
-            var topics =  await 
+            var topics = await
                 db.Topics.Where(t => t.Title.Contains(searchString)).ToListAsync();
 
             return View("Index", topics);
