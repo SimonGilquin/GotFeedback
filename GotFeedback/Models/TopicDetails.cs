@@ -64,5 +64,7 @@ namespace GotFeedback.Models
 
             return tagsSb.ToString();
         }
+        public int LikesCount { get; set; }
+        public IEnumerable<string> TagLabels { get; set; }
     }
 }
