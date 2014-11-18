@@ -43,7 +43,7 @@ namespace GotFeedback.Controllers
                     IsOwner = t.User.UserName == User.Identity.Name,
                     ViewCount = t.ViewCount,
                     LikesCount = t.LikesCount,
-                    Tags = t.Tags.Select(tag => tag.Label)
+                    TagLabels = t.Tags.Select(tag => tag.Label)
                 },
                 Email = t.User.Email,
             });
@@ -75,6 +75,22 @@ namespace GotFeedback.Controllers
             return ControllerContext.IsChildAction ? (ActionResult)PartialView(topics) : View(topics);
         }
 
+        [HttpPost]
+        public async void UpdateTagsCollection(Topic topic)
+        {
+            var tags = topic.TagsLiteral.Split(',');
+
+            foreach (var tag in tags)
+            {
+                if (topic.Tags.Any(t => t.Label.Equals(tag, StringComparison.OrdinalIgnoreCase))) continue;
+
+                Tag newTag = new Tag { TopicId = topic.Id, Label = tag };
+                db.Tags.Add(newTag);
+            }
+
+            await db.SaveChangesAsync();
+        }
+
         // GET: Topics/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -86,6 +102,9 @@ namespace GotFeedback.Controllers
             var currentTopic = await db.Topics.SingleOrDefaultAsync(t => t.Id == id);
             if (currentTopic != null)
             {
+
+
+
                 currentTopic.ViewCount++;
                 db.Entry(currentTopic).State = EntityState.Modified;
                 await db.SaveChangesAsync();
@@ -100,7 +119,8 @@ namespace GotFeedback.Controllers
                     CreatedDate = t.CreatedDate,
                     Username = t.User.UserName,
                     Title = t.Title,
-                    IsOwner = t.User.UserName == User.Identity.Name
+                    IsOwner = t.User.UserName == User.Identity.Name,
+                    Tags = t.Tags.ToList()
                 },
                 Email = t.User.Email
             }).SingleOrDefaultAsync(t => t.Details.Id == id);
@@ -175,6 +195,7 @@ namespace GotFeedback.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(topic).State = EntityState.Modified;
+                UpdateTagsCollection(topic);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", new { topic.Id });
             }

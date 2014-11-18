@@ -16,7 +16,7 @@
     <h3>
       @Model.Title
     </h3>
-      <h4><small>Submitted on @Model.CreatedDate</small></h4>
+    <h4><small>Submitted on @Model.CreatedDate</small></h4>
     @if (Model.Tags != null)
     {
       <h4>Tags</h4>
@@ -25,8 +25,10 @@
   </div>
   @if (Model.IsOwner)
   {
+    <h4>Tags</h4>
     <div class="col-md-6">
-      <input type="text" id="tags">
+          <input type="text" onchange="" /> 
+          @Html.TextBoxFor(model => model.TagsLiteral, new { @id = "tags", @class = "form-control", required = "required", rows = 6 })
     </div>
     <p>
       @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
