@@ -9,6 +9,10 @@ using System.Web.Mvc;
 using GotFeedback.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+using System.Configuration;
 
 namespace GotFeedback.Controllers
 {
@@ -37,7 +41,7 @@ namespace GotFeedback.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var topic = await db.Topics.Select(t=>new
+            var topic = await db.Topics.Select(t => new
             {
                 Details = new TopicDetails
                 {
@@ -47,7 +51,7 @@ namespace GotFeedback.Controllers
                     Username = t.User.UserName
                 },
                 Email = t.User.Email
-            }).SingleOrDefaultAsync(t=>t.Details.Id==id);
+            }).SingleOrDefaultAsync(t => t.Details.Id == id);
 
             if (topic == null)
             {
@@ -59,7 +63,7 @@ namespace GotFeedback.Controllers
                     .Replace("-", "")
                     .ToLowerInvariant());
 
-         //   ViewBag.Comments = db.Comments.Where(c => c.TopicId == topic.Id);
+            //   ViewBag.Comments = db.Comments.Where(c => c.TopicId == topic.Id);
 
             return View(topic.Details);
         }
@@ -157,5 +161,85 @@ namespace GotFeedback.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public void UploadImage(string file)
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConfigurationManager.ConnectionStrings["StorageConnectionString"].ConnectionString);
+
+            // Create the blob client.
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container = blobClient.GetContainerReference("mycontainer");
+
+            // Retrieve reference to a blob named "myblob".
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference("myblob");
+
+            // Create or overwrite the "myblob" blob with contents from a local file.
+            using (var fileStream = System.IO.File.OpenRead(file))
+            {
+                blockBlob.UploadFromStream(fileStream);
+            }
+
+        }
+
+        public void DownloadImage()
+        {
+ 
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConfigurationManager.ConnectionStrings["StorageConnectionString"].ConnectionString);
+
+            // Create the blob client.
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container = blobClient.GetContainerReference("mycontainer");
+
+            // Retrieve reference to a blob named "photo1.jpg".
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference("photo1.jpg");
+
+            // Save blob contents to a file.
+            using (var fileStream = System.IO.File.OpenWrite(@"path\myfile"))
+            {
+                blockBlob.DownloadToStream(fileStream);
+            } 
+        }
+
+        public void ListImages()
+        {
+            // Retrieve storage account from connection string.
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConfigurationManager.ConnectionStrings["StorageConnectionString"].ConnectionString);
+
+            // Create the blob client. 
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container = blobClient.GetContainerReference("photos");
+
+            // Loop over items within the container and output the length and URI.
+            foreach (IListBlobItem item in container.ListBlobs(null, false))
+            {
+                if (item.GetType() == typeof(CloudBlockBlob))
+                {
+                    CloudBlockBlob blob = (CloudBlockBlob)item;
+
+                    Console.WriteLine("Block blob of length {0}: {1}", blob.Properties.Length, blob.Uri);
+
+                }
+                else if (item.GetType() == typeof(CloudPageBlob))
+                {
+                    CloudPageBlob pageBlob = (CloudPageBlob)item;
+
+                    Console.WriteLine("Page blob of length {0}: {1}", pageBlob.Properties.Length, pageBlob.Uri);
+
+                }
+                else if (item.GetType() == typeof(CloudBlobDirectory))
+                {
+                    CloudBlobDirectory directory = (CloudBlobDirectory)item;
+
+                    Console.WriteLine("Directory: {0}", directory.Uri);
+                }
+            }
+        }
     }
 }
+
