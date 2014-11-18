@@ -269,6 +269,7 @@ namespace GotFeedback.Controllers
         }
 
         [HttpPost, ActionName("Search")]
+        [ValidateAntiForgeryToken]
         [AcceptVerbs(HttpVerbs.Post)]
         public async Task<ActionResult> Search(FormCollection formCollection)
         {
