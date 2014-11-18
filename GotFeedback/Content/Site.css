@@ -19,18 +19,16 @@ textarea {
     padding: 0;
 }
 
-    .input-wrapper input[type=text] {
+.input-wrapper input[type=text] {
         width: 85%;
         font-size: 16px;
-    }
+}
 
 
 /* Search Textbox*/
 #tfheader {
     background-color: #c3dfef;
 }
-
-
 
 #tfnewsearch {
     float: right;
@@ -99,12 +97,12 @@ textarea {
     display: inline-block;
 }
 
-    a.post-tag:hover, .post-text a.post-tag:hover, .wmd-preview a.post-tag:hover {
-        background-color: #C4DAE9;
-        border-bottom: 1px solid #C4DAE9;
-        border-right: 1px solid #C4DAE9;
-        text-decoration: none;
-    }
+a.post-tag:hover, .post-text a.post-tag:hover, .wmd-preview a.post-tag:hover {
+    background-color: #C4DAE9;
+    border-bottom: 1px solid #C4DAE9;
+    border-right: 1px solid #C4DAE9;
+    text-decoration: none;
+}
 
 /*Tags  */
 

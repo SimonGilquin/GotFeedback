@@ -16,5 +16,8 @@ namespace GotFeedback.Models
         public string Username { get; set; }
 
         public string GravatarUrl { get; set; }
+
+        public int ViewCount { get; set; }
+
     }
 }

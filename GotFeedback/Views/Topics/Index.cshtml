@@ -1,4 +1,5 @@
-﻿@model IEnumerable<GotFeedback.Models.Topic>
+﻿@using GotFeedback.Controllers
+@model IEnumerable<GotFeedback.Models.Topic>
 
 @{
     ViewBag.Title = "Index";
@@ -9,64 +10,39 @@
 @using (Html.BeginForm("New", "Topics", FormMethod.Post, new { @class = "" }))
 {
     <div class="">
-        <input type="text" class="tftextinput" name="q" size="38">
-        <input type="submit" value="search" class="tfbutton">
+        <input type="text" class="" name="q">
+        <input type="submit" value="search" class="">
     </div>
 }
 
 <br />
 
-@*@using (Html.BeginForm("New", "Topics", FormMethod.Post, new { @class = "" }))
-{
-    <div class="">
-        <table class="table-bordered">
-            <tr>
-                <td>
+<div class="">
+    <table class="table-striped" style="border-collapse: separate;border-spacing: 5px;">
+        <tr>
+            <td>
+                @using (Html.BeginForm("New", "Topics", FormMethod.Post, new { @class = "" }))
+                {
                     <button type="submit" class="btn btn-success pull-left">
                         New Topic &nbsp; <i class="fa fa-plus"></i>
                     </button>
-                </td>
-                <td>
-                    <button type="submit" class="btn btn-success pull-left">
+                }
+            </td>
+            <td>
+                @using (Html.BeginForm("Index", "Topics", new { order = TopicsOrderBy.CreatedDate }, FormMethod.Post, new { @class = "" }))
+                {
+                    <button type="submit" class="btn btn-info pull-left">
                         Order by date &nbsp; <i class="fa fa-bars"></i>
                     </button>
-                </td>
-                <td>
-                    <button type="submit" class="btn btn-success pull-left">
+                }
+            </td>
+            <td>
+                @using (Html.BeginForm("Index", "Topics", new { order = TopicsOrderBy.ViewCount }, FormMethod.Post, new { @class = "" }))
+                {
+                    <button type="submit" class="btn btn-info pull-left">
                         Order by views &nbsp; <i class="fa fa-star"></i>
                     </button>
-                </td>
-            </tr>
-        </table>
-    </div>
-}*@      
-      
-<div class="">
-    <table class="table-striped" style="border-collapse: separate;border-spacing: 5px;" >
-        <tr>
-            <td>
-           @using (Html.BeginForm("New", "Topics", FormMethod.Post, new {@class = ""}))
-           {
-               <button type="submit" class="btn btn-success pull-left">
-                   New Topic &nbsp; <i class="fa fa-plus"></i>
-               </button>
-           }
-            </td>
-            <td>
-            @using (Html.BeginForm("New", "Topics", FormMethod.Post, new {@class = ""}))
-            {
-                <button type="submit" class="btn btn-info pull-left">
-                    Order by date &nbsp; <i class="fa fa-bars"></i>
-                </button>
-            }
-            </td>
-            <td>
-            @using (Html.BeginForm("New", "Topics", FormMethod.Post, new { @class = "" }))
-            {
-                <button type="submit" class="btn btn-info pull-left">
-                    Order by views &nbsp; <i class="fa fa-star"></i>
-                </button>
-            }
+                }
             </td>
         </tr>
     </table>
@@ -77,9 +53,9 @@
 {
     <table class="table-responsive" style="margin-top: 5px;margin-bottom: 5px">
         <tr>
-            <th colspan="3">
+            <th>
 
-                <div style="margin: 10px">
+                <div>
                     @Html.ActionLink(@item.Title, "Details", new { id = item.Id })
 
                 </div>
@@ -87,33 +63,54 @@
         </tr>
 
         <tr>
-            <td colspan="3">
+            <td>
                 <div style="margin-left: 10px">
-                    <a class="post-tag" rel="tag" title="" href="#">Question</a>
-                    <a class="post-tag" rel="tag" title="" href="#">Bug</a>
+                    @foreach (var topicTag in item.Tags)
+                    {
+                        <a class="post-tag" rel="tag" title="" href="#">@topicTag.Label</a>
+                    }
                 </div>
             </td>
         </tr>
         <tr>
             <td>
-                <div style="margin: 2px">
-                    Like (+7)&nbsp; <i class="glyphicon glyphicon-thumbs-up"></i>
+                <div class="btn-group pull-right">
+                    <button type="submit" class="btn btn-default" onclick="location.href='@Url.Action("AddLike", "Topics", new { id = item.Id })'">
+                        (+@item.LikesCount)&nbsp;<i class="glyphicon glyphicon-thumbs-up"></i>
+                    </button>
+                    <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("AddLike", "Topics")'">
+                        <i class="fa fa-question"></i>
+                    </button>
+                    <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("New", "Comments")'">
+                        <i class="fa fa-comment"></i>
+                    </button>
                 </div>
             </td>
-            <td>
-                <div style="margin: 2px">
-                    Ask <i class="fa fa-question"></i>
-                </div>
-            </td>
-            <td style="text-align: right">
-                <div style="margin: 2px">
-                    Comment   <i class="fa fa-comment"></i>
-                </div>
-            </td>
+
+
+            @*<td>
+                    <div>
+                        <button class="btn btn-group"></button>
+
+                        Like (+@item.LikesCount)&nbsp;
+
+                        <a href="@Url.Action("AddLike", new {id = item.Id})">
+                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        Ask <i class="fa fa-question"></i>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <a href="@Url.Action("New", "Comments", new Comment { TopicId = item.Id })">
+                            Comment   <i class="fa fa-comment"></i>
+                        </a>
+                    </div>
+                </td>*@
         </tr>
     </table>
 }
-
-
-<br />
-@Html.ActionLink("Create New", "New")
