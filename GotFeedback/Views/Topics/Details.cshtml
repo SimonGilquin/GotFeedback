@@ -44,7 +44,7 @@
 
 <script>
     $('#tags').selectize({
-        delimiter: ',',
+        plugins: ['remove_button'], delimiter: ',',
         persist: false,
         create: function (input) {
             return {
