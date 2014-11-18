@@ -6,7 +6,7 @@
 
 <div id="TopicDetails" class="">
   <h2 class="topic-title">
-    @Model.Category by @Model.Username
+    @Model.Category by @(Model.IsOwner ? "you" : Model.Username)
     @if (Model.GravatarUrl != null)
     {
       <img alt="@Model.Username" class="gravatar" src="@Model.GravatarUrl" />
@@ -23,7 +23,10 @@
       </div>
   </div>
   <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @if (Model.IsOwner)
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })<text> |</text>
+        }
     @Html.ActionLink("Back to List", "Index")
   </p>
   @using (Html.BeginForm("UploadImage", "Topics", FormMethod.Post,new { enctype = "multipart/form-data" }))
@@ -39,19 +42,3 @@
   @Html.Action("Index", "Comments", new { id = Model.Id })
 
 </div>       
-
-@Scripts.Render("~/js/jquery")
-@Scripts.Render("~/js")
-
-<script>
-    $('#tags').selectize({
-        plugins: ['remove_button'], delimiter: ',',
-        persist: false,
-        create: function (input) {
-            return {
-                value: input,
-                text: input
-            }
-        }
-    });
-</script>

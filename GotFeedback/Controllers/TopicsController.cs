@@ -64,7 +64,9 @@ namespace GotFeedback.Controllers
                     Id = t.Id,
                     Category = t.Category,
                     CreatedDate = t.CreatedDate,
-                    Username = t.User.UserName
+                    Username = t.User.UserName,
+                    Title = t.Title,
+                    IsOwner = t.User.UserName == User.Identity.Name
                 },
                 Email = t.User.Email
             }).SingleOrDefaultAsync(t => t.Details.Id == id);
@@ -74,10 +76,10 @@ namespace GotFeedback.Controllers
                 return HttpNotFound();
             }
 
-            //topic.Details.GravatarUrl = string.Format("http://www.gravatar.com/avatar/{0}",
-            //    BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(topic.Email.ToLowerInvariant())))
-            //        .Replace("-", "")
-            //        .ToLowerInvariant());
+            topic.Details.GravatarUrl = string.Format("http://www.gravatar.com/avatar/{0}",
+                BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(topic.Email.ToLowerInvariant())))
+                    .Replace("-", "")
+                    .ToLowerInvariant());
 
 
             return View(topic.Details);
@@ -137,7 +139,7 @@ namespace GotFeedback.Controllers
             {
                 db.Entry(topic).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { topic.Id });
             }
             return View(topic);
         }
@@ -273,6 +275,7 @@ namespace GotFeedback.Controllers
         }
 
         [HttpPost, ActionName("Search")]
+        [ValidateAntiForgeryToken]
         [AcceptVerbs(HttpVerbs.Post)]
         public async Task<ActionResult> Search(FormCollection formCollection)
         {

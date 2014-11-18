@@ -18,6 +18,6 @@ namespace GotFeedback.Models
         public string GravatarUrl { get; set; }
 
         public int ViewCount { get; set; }
-
+        public bool IsOwner { get; set; }
     }
 }

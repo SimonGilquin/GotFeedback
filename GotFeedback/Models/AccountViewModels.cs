@@ -38,7 +38,6 @@ namespace GotFeedback.Models
     public class LoginViewModel
     {
         [Required]
-        [EmailAddress]
         [Display(Name = "Username or email")]
         public string Username { get; set; }
 
