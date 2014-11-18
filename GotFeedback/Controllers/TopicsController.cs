@@ -32,11 +32,11 @@ namespace GotFeedback.Controllers
             switch (order)
             {
                 case TopicsOrderBy.ViewCount:
-               return View(await db.Topics.OrderByDescending(t => t.ViewCount).ToListAsync());      
+                    return View(await db.Topics.OrderByDescending(t => t.ViewCount).ToListAsync());
                 case TopicsOrderBy.CreatedDate:
-                return View(await db.Topics.OrderByDescending(t => t.CreatedDate).ToListAsync()); 
+                    return View(await db.Topics.OrderByDescending(t => t.CreatedDate).ToListAsync());
                 default:
-                    return View(await db.Topics.ToListAsync());;
+                    return View(await db.Topics.ToListAsync()); ;
             }
         }
 
@@ -196,7 +196,7 @@ namespace GotFeedback.Controllers
 
         public void DownloadImage()
         {
- 
+
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConfigurationManager.ConnectionStrings["StorageConnectionString"].ConnectionString);
 
             // Create the blob client.
@@ -212,7 +212,7 @@ namespace GotFeedback.Controllers
             using (var fileStream = System.IO.File.OpenWrite(@"path\myfile"))
             {
                 blockBlob.DownloadToStream(fileStream);
-            } 
+            }
         }
 
         public void ListImages()
@@ -269,7 +269,7 @@ namespace GotFeedback.Controllers
     public enum TopicsOrderBy
     {
         ViewCount = 0,
-        CreatedDate = 1           ,
+        CreatedDate = 1,
         None = 2
     }
 }

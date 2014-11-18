@@ -31,17 +31,17 @@
             <td>
                 @using (Html.BeginForm("Index", "Topics", new { order = TopicsOrderBy.CreatedDate }, FormMethod.Post, new { @class = "" }))
                 {
-                <button type="submit" class="btn btn-info pull-left">
-                    Order by date &nbsp; <i class="fa fa-bars"></i>
-                </button>
+                    <button type="submit" class="btn btn-info pull-left">
+                        Order by date &nbsp; <i class="fa fa-bars"></i>
+                    </button>
                 }
             </td>
             <td>
                 @using (Html.BeginForm("Index", "Topics", new { order = TopicsOrderBy.ViewCount }, FormMethod.Post, new { @class = "" }))
                 {
-                <button type="submit" class="btn btn-info pull-left">
-                    Order by views &nbsp; <i class="fa fa-star"></i>
-                </button>
+                    <button type="submit" class="btn btn-info pull-left">
+                        Order by views &nbsp; <i class="fa fa-star"></i>
+                    </button>
                 }
             </td>
         </tr>
@@ -65,8 +65,10 @@
         <tr>
             <td colspan="3">
                 <div style="margin-left: 10px">
-                    <a class="post-tag" rel="tag" title="" href="#">Question</a>
-                    <a class="post-tag" rel="tag" title="" href="#">Bug</a>
+                    @foreach (var topicTag in item.Tags)
+                    {
+                        <a class="post-tag" rel="tag" title="" href="#">@topicTag.Label</a>
+                    }
                 </div>
             </td>
         </tr>
@@ -95,7 +97,3 @@
         </tr>
     </table>
 }
-
-
-<br />
-@Html.ActionLink("Create New", "New")

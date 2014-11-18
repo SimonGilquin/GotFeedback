@@ -29,6 +29,14 @@ namespace GotFeedback.Migrations
                 new Comment { TopicId = 1, Message = "Commentaire...", Date = DateTime.Now },
                 new Comment { TopicId = 1, Message = "Exemple de commentaire 2...", Date = DateTime.Now },
                 new Comment { TopicId = 2, Message = "Commentaire Topic 2.", Date = DateTime.Now });
+
+            context.Tags.AddOrUpdate(t => t.Id, 
+                new Tag{ TopicId = 1, Label = "Question"},
+                new Tag{ TopicId = 1, Label = "Password"},
+                new Tag{ TopicId = 1, Label = "Account"},
+                new Tag{ TopicId = 2, Label = "Access"},
+                new Tag{ TopicId = 2, Label = "Avatar"}
+                );
         }
     }
 }

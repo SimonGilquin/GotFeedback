@@ -20,9 +20,13 @@ namespace GotFeedback.Models
 
         public virtual ICollection<Comment> Comments { get; set; }
 
+        public virtual ICollection<Tag> Tags { get; set; } 
+
         public int LikesCount { get; set; }
 
         public int ViewCount { get; set; }
+
+
     }
 
     public enum TopicCategory
