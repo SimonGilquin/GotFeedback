@@ -5,10 +5,21 @@
   ViewBag.Title = "Hot new topics";
 }
 
-<h2 class="h3">Hot new topics</h2>
-@using (Html.BeginForm("Search", "Topics", FormMethod.Post, new { @class = "" }))
+  @if (!string.IsNullOrWhiteSpace(ViewBag.Search))
+  {
+      <h2 class="h3">
+          Topics "@ViewBag.Search"
+        @Html.ActionLink("See all", "Index", "Topics", null, new { @class = "btn btn-primary pull-right" })
+      </h2>
+  }
+  else
+  {
+    <h2 class="h3">
+      Hot new topics
+    </h2>
+  }
+@using (Html.BeginForm("Index", "Topics", FormMethod.Get, new { @class = "" }))
 {
-  @Html.AntiForgeryToken()
   <div class="input-group">
     <input type="text" name="searchString" class="form-control" placeholder="search for a topic" required="required" />
     <span class="input-group-btn">
@@ -32,64 +43,33 @@
 <div class="list-group">
   @foreach (var item in Model)
   {
-      <a href="@Url.Action("Details", "Topics", new{item.Id})" class="list-group-item">
-          <h4 class="list-group-item-heading">
-              @item.Category by @(item.IsOwner ? "you" : string.IsNullOrWhiteSpace(item.Username) ? "anonymous" : item.Username)
-            @if (item.GravatarUrl != null)
-            {
-              <img alt="@item.Username" class="gravatar" src="@item.GravatarUrl" />
-            }
-          </h4>
-          <p class="list-group-item-text">@item.Title</p>
-          <div class="btn-group" role="group">
-            <div type="submit" class="btn btn-default" onclick="location.href='@Url.Action("AddLike", "Topics", new { id = item.Id })'">
-              (+@item.LikesCount)&nbsp;<i class="glyphicon glyphicon-thumbs-up"></i>
-            </div>
-            <div type="button" class="btn btn-default" onclick="location.href='@Url.Action("AddLike", "Topics")'">
-              <i class="fa fa-question"></i>
-            </div>
-            <div type="button" class="btn btn-default" onclick="location.href='@Url.Action("New", "Comments")'">
-              <i class="fa fa-comment"></i>
-            </div>
-              
-          </div>
-      </a>
-  }
-</div>  @*
-  <table class="table-responsive" style="margin-top: 5px;margin-bottom: 5px">
-    <tr>
-      <th>
+    <a href="@Url.Action("Details", "Topics", new{item.Id})" class="list-group-item">
+      <h4 class="list-group-item-heading">
+        @item.Category by @(item.IsOwner ? "you" : string.IsNullOrWhiteSpace(item.Username) ? "anonymous" : item.Username)
+        @if (item.GravatarUrl != null)
+        {
+          <img alt="@item.Username" class="gravatar" src="@item.GravatarUrl" />
+        }
+      </h4>
+        <p class="list-group-item-text">@item.Title</p>
         <div>
-          @Html.ActionLink(@item.Title, "Details", new { id = item.Id })
+            @foreach (var tag in item.TagLabels)
+            {
+                <span class="label label-default">@tag</span>
+            }
         </div>
-      </th>
-    </tr>
+      <div class="btn-group" role="group">
+        <div type="submit" class="btn btn-default" onclick="location.href='@Url.Action("AddLike", "Topics", new { id = item.Id })'">
+          (+@item.LikesCount)&nbsp;<i class="glyphicon glyphicon-thumbs-up"></i>
+        </div>
+        <div type="button" class="btn btn-default" onclick="location.href='@Url.Action("AddLike", "Topics")'">
+          <i class="fa fa-question"></i>
+        </div>
+        <div type="button" class="btn btn-default" onclick="location.href='@Url.Action("New", "Comments")'">
+          <i class="fa fa-comment"></i>
+        </div>
 
-    <tr>
-      <td>
-        <div class="">
-          @foreach (var topicTag in item.Tags)
-          {
-            <a class="post-tag" rel="tag" title="" href="#">@topicTag.Label</a>
-          }
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <div class="btn-group pull-right">
-          <button type="submit" class="btn btn-default" onclick="location.href='@Url.Action("AddLike", "Topics", new { id = item.Id })'">
-            (+@item.LikesCount)&nbsp;<i class="glyphicon glyphicon-thumbs-up"></i>
-          </button>
-          <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("AddLike", "Topics")'">
-            <i class="fa fa-question"></i>
-          </button>
-          <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("New", "Comments")'">
-            <i class="fa fa-comment"></i>
-          </button>
-        </div>
-      </td>
-
-    </tr>
-  </table>
-*@
+      </div>
+    </a>
+  }
+</div>

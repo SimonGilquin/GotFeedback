@@ -29,7 +29,7 @@ namespace GotFeedback.Controllers
             userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
 
-        public ActionResult Index(TopicsOrderBy order = TopicsOrderBy.None)
+        public ActionResult Index(string searchString = null, TopicsOrderBy order = TopicsOrderBy.None)
         {
             var query = db.Topics.Select(t => new
             {
@@ -45,8 +45,17 @@ namespace GotFeedback.Controllers
                     LikesCount = t.LikesCount,
                     TagLabels = t.Tags.Select(tag => tag.Label)
                 },
-                Email = t.User.Email,
+                t.User.Email,
             });
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                query =
+                    query.Where(
+                        t =>
+                            t.Details.Title.Contains(searchString) ||
+                            t.Details.TagLabels.Any(tag => tag.Contains(searchString)));
+                ViewBag.Search = searchString;
+            }
             switch (order)
             {
                 case TopicsOrderBy.ViewCount:

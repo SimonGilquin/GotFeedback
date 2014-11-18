@@ -60,5 +60,11 @@
       }
     }
   });
- 
+
+  $('body').on('click', 'a', function(e) {
+    window.location = $(this).attr('href');
+    e.preventDefault();
+    return false;
+  });
+
 });
