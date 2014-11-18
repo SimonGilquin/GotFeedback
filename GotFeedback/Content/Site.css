@@ -356,3 +356,8 @@ a.post-tag:hover, .post-text a.post-tag:hover, .wmd-preview a.post-tag:hover {
     -moz-border-radius: 16px;
     border-radius: 16px;
 }
+
+
+.tab-content {
+    margin-top: 10px;
+}
