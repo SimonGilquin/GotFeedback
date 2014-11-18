@@ -185,7 +185,7 @@ namespace GotFeedback.Controllers
             string filename = System.IO.Path.GetFileName(file.FileName.ToString());
 
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["StorageConnectionString"]);
-
+                       
             // Create the blob client.
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
