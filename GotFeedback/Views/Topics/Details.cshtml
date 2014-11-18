@@ -22,11 +22,12 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
   </p>
-  @using (Html.BeginForm("UploadImage", "Topics"))
+  @using (Html.BeginForm("UploadImage", "Topics", FormMethod.Post,new { enctype = "multipart/form-data" }))
   {
     <p>
       <b>Upload Image:</b><input type="file" name="file" class="btn btn-default" />
       <input type="submit" value="Upload" class="btn btn-default" />
+                
     </p>
   }
   @Html.Partial("~/Views/Comments/_NewComment.cshtml", new Comment { TopicId = Model.Id })
