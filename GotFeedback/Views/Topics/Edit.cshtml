@@ -26,7 +26,13 @@
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
 
-        
+            @if (Model.Tags != null)
+            {
+                <h4>Tags</h4>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.TagsLiteral, new { @id = "tags", @class = "form-control" })
+                </div>
+            }
         </div>
 
         <div class="form-group">
