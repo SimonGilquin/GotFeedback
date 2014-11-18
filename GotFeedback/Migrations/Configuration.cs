@@ -20,6 +20,7 @@ namespace GotFeedback.Migrations
         {
             //  This method will be called after migrating to the latest version.
 
+/*
             context.Topics.AddOrUpdate(t => t.Id,
                 new Topic { Id = 1, Title = "Comment je peux réinitialiser mon mot de passe?", LikesCount = 0, ViewCount = 5, CreatedDate = DateTime.Now },
                 new Topic { Id = 2, Title = "Je n'ai pas reçu l'email de confirmation.", LikesCount = 12, ViewCount = 9, CreatedDate = DateTime.Now });
@@ -37,6 +38,7 @@ namespace GotFeedback.Migrations
                 new Tag{ TopicId = 2, Label = "Access"},
                 new Tag{ TopicId = 2, Label = "Avatar"}
                 );
+*/
         }
     }
 }

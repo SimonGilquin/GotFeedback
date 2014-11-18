@@ -36,7 +36,12 @@
         @using (Html.BeginForm("UpdateTagsCollection", "Topics", new { topic = Model }, FormMethod.Post, new { id = "TagsForm" }))
         {
           @Html.Hidden("TopicId", Model.Id)
-          @Html.TextBox("Tags", "", new { @id = "TagField", @class = "form-control" })
+          <div class="input-group">
+            <input name="Tags" id="TagField" type="text" class="form-control">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Add</button>
+            </span>
+          </div>
         }
       </div>
     }
@@ -47,8 +52,13 @@
     using (Html.BeginForm("UploadImage", "Topics", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
       <p>
-        <b>Upload Image:</b><input type="file" name="file" class="btn btn-default" />
-        <input type="submit" value="Upload" class="btn btn-default" />
+        <b>Upload Image:</b>
+        <div class="input-group">
+          <input type="file" name="file" class="form-control" />
+          <span class="input-group-btn">
+            <input type="submit" class="btn btn-primary" value="Upload" type="button" />
+          </span>
+        </div>
 
       </p>
     }
