@@ -48,8 +48,10 @@ namespace GotFeedback.Controllers
         }
 
         [HttpPost]
-        public async void UpdateTagsCollection(Topic topic)
+        public void UpdateTagsCollection(Topic topic)
         {
+            if(topic == null) return;
+            
             var tags = topic.TagsLiteral.Split(',');
 
             foreach (var tag in tags)
@@ -60,7 +62,7 @@ namespace GotFeedback.Controllers
                 db.Tags.Add(newTag);
             }
 
-            await db.SaveChangesAsync();
+            db.SaveChanges();
         }
 
         // GET: Topics/Details/5
