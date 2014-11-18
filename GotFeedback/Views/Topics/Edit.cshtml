@@ -28,8 +28,8 @@
 
             @if (Model.Tags != null)
             {
-                <h4>Tags</h4>
-                <div class="col-md-6">
+                @Html.LabelFor(model => model.TagsLiteral, htmlAttributes: new { @class = "control-label col-md-2" }, labelText: "Tags")
+                <div class="col-md-10">
                     @Html.TextBoxFor(model => model.TagsLiteral, new { @id = "tags", @class = "form-control" })
                 </div>
             }

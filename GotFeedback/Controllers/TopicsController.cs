@@ -260,7 +260,7 @@ namespace GotFeedback.Controllers
             string filename = System.IO.Path.GetFileName(file.FileName.ToString());
 
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["StorageConnectionString"]);
-                       
+
             // Create the blob client.
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
@@ -352,11 +352,21 @@ namespace GotFeedback.Controllers
         [ActionName("Search")]
         [ValidateAntiForgeryToken]
         [AcceptVerbs(HttpVerbs.Post)]
-        public async Task<ActionResult> Search(FormCollection formCollection)
+        public ActionResult Search(FormCollection formCollection)
         {
             var searchString = formCollection["searchString"];
-            var topics = await
-                db.Topics.Where(t => t.Title.Contains(searchString)).ToListAsync();
+            var topics =
+                db.Topics.Select(t => new TopicDetails
+                    {
+                        Id = t.Id,
+                        Category = t.Category,
+                        CreatedDate = t.CreatedDate,
+                        Username = t.User.UserName,
+                        Title = t.Title,
+                        IsOwner = t.User.UserName == User.Identity.Name,
+                        Tags = t.Tags.ToList(), LikesCount = t.LikesCount, ViewCount = t.ViewCount
+                    }
+                ).Where(td => td.Title.Contains(searchString));
 
             return View("Index", topics);
         }
