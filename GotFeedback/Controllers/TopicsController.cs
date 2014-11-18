@@ -267,6 +267,18 @@ namespace GotFeedback.Controllers
 
             return RedirectToAction("Index", "Topics");
         }
+
+        [HttpPost, ActionName("Search")]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public async Task<ActionResult> Search(FormCollection formCollection)
+        {
+            var searchString = formCollection["searchString"];
+            var topics =  await 
+                db.Topics.Where(t => t.Title.Contains(searchString)).ToListAsync();
+
+            return View("Index", topics);
+        }
+
     }
 
     public enum TopicsOrderBy
@@ -275,5 +287,6 @@ namespace GotFeedback.Controllers
         CreatedDate = 1,
         None = 2
     }
+
 }
 
