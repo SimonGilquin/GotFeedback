@@ -19,10 +19,21 @@ textarea {
     padding-right: 10px;
 }
 
+.input-wrapper {
+    padding:0;
+}
+.input-wrapper input[type=text] {
+    width:85%;
+    font-size:16px;
+}
+
+
 /* Search Textbox*/
 #tfheader {
     background-color: #c3dfef;
 }
+
+
 
 #tfnewsearch {
     float: right;
