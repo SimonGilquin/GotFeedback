@@ -10,13 +10,13 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Topic</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model => model.CreatedDate)    
+        @Html.HiddenFor(model => model.CreatedDate)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -26,6 +26,8 @@
 
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
+
+          
         </div>
 
         <div class="form-group">
@@ -38,5 +40,6 @@
 
 <div>
     @Html.ActionLink("Back to List", "Index")
-</div>
+</div>       
+
 

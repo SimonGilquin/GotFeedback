@@ -22,6 +22,7 @@ namespace GotFeedback
 
             bundles.Add(new ScriptBundle("~/js").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/selectize.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/gotfeedback.js"));
 
@@ -30,6 +31,7 @@ namespace GotFeedback
 
             bundles.Add(new StyleBundle("~/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/selectize.bootstrap3.css",
                       "~/Content/font-awesome.min.css",
                       "~/Content/site.css"));
 
