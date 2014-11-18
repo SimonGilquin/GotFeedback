@@ -21,9 +21,10 @@
   @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
   @Html.ActionLink("Back to List", "Index")
 </p>
-@using (Ajax.BeginForm("Upload", "Topics", FormMethod.Post, null))
+@using (Html.BeginForm())
 {
-<p><b>Upload Image:</b><input type="file" name="file" /><input type="submit" value="Upload" class="btn btn-default" /></p>
+<p><b>Upload Image:</b><input type="file" name="file" class="btn btn-default" />
+    <input type="submit" value="Upload" class="btn btn-default" /></p>
 }
 
 @Html.Action("Index", "Comments", new { id = Model.Id })
