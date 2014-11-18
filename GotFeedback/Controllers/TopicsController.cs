@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography;
@@ -28,17 +29,22 @@ namespace GotFeedback.Controllers
             userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
 
-        public async Task<ActionResult> Index(TopicsOrderBy order = TopicsOrderBy.None)
+        public ActionResult Index(TopicsOrderBy order = TopicsOrderBy.None)
         {
+            IEnumerable<Topic> topics;
             switch (order)
             {
                 case TopicsOrderBy.ViewCount:
-                    return View(await db.Topics.OrderByDescending(t => t.ViewCount).ToListAsync());
+                    topics = db.Topics.OrderByDescending(t => t.ViewCount).ToList();
+                    break;
                 case TopicsOrderBy.CreatedDate:
-                    return View(await db.Topics.OrderByDescending(t => t.CreatedDate).ToListAsync());
+                    topics = db.Topics.OrderByDescending(t => t.CreatedDate).ToList();
+                    break;
                 default:
-                    return View(await db.Topics.ToListAsync()); ;
+                    topics= db.Topics.OrderByDescending(t => t.CreatedDate).ToList();
+                    break;
             }
+            return ControllerContext.IsChildAction ? (ActionResult)PartialView(topics) : View(topics);
         }
 
         // GET: Topics/Details/5
@@ -76,11 +82,14 @@ namespace GotFeedback.Controllers
                 return HttpNotFound();
             }
 
-            topic.Details.GravatarUrl = string.Format("http://www.gravatar.com/avatar/{0}",
-                BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(topic.Email.ToLowerInvariant())))
-                    .Replace("-", "")
-                    .ToLowerInvariant());
+            if (topic.Email!=null)
+            {
+                topic.Details.GravatarUrl = string.Format("http://www.gravatar.com/avatar/{0}",
+            BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(topic.Email.ToLowerInvariant())))
+                .Replace("-", "")
+                .ToLowerInvariant());
 
+            }
 
             return View(topic.Details);
         }
@@ -274,7 +283,7 @@ namespace GotFeedback.Controllers
             return RedirectToAction("Index", "Topics");
         }
 
-        [HttpPost, ActionName("Search")]
+        [ActionName("Search")]
         [ValidateAntiForgeryToken]
         [AcceptVerbs(HttpVerbs.Post)]
         public async Task<ActionResult> Search(FormCollection formCollection)

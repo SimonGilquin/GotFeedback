@@ -1,12 +1,11 @@
 ﻿@using GotFeedback.Controllers
-@model IEnumerable<GotFeedback.Models.Topic>
+@model IEnumerable<Topic>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Hot new topics";
 }
 
-<br />
-
+<h2 class="h3">Hot new topics</h2>
 @using (Html.BeginForm("Search", "Topics", FormMethod.Post, new { @class = "" }))
 {
     @Html.AntiForgeryToken()

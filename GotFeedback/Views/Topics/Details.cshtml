@@ -6,7 +6,7 @@
 
 <div id="TopicDetails" class="">
   <h2 class="topic-title">
-    @Model.Category by @(Model.IsOwner ? "you" : Model.Username)
+    @Model.Category by @(Model.IsOwner ? "you" : string.IsNullOrWhiteSpace(Model.Username) ? "anonymous" : Model.Username)
     @if (Model.GravatarUrl != null)
     {
       <img alt="@Model.Username" class="gravatar" src="@Model.GravatarUrl" />
@@ -16,29 +16,29 @@
     <h3>
       @Model.Title
     </h3>
-      <h4><small>Submitted on @Model.CreatedDate</small></h4>      
-      <h4>Tags</h4>
-      <div class="col-md-6">
-          <input type="text" id="tags">
-      </div>
+    <h4><small>Submitted on @Model.CreatedDate</small></h4>
+    <h4>Tags</h4>
   </div>
-  <p>
-        @if (Model.IsOwner)
-        {
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })<text> |</text>
-        }
-    @Html.ActionLink("Back to List", "Index")
-  </p>
-  @using (Html.BeginForm("UploadImage", "Topics", FormMethod.Post,new { enctype = "multipart/form-data" }))
+  @if (Model.IsOwner)
   {
+    <div class="col-md-6">
+      <input type="text" id="tags">
+    </div>
     <p>
-      <b>Upload Image:</b><input type="file" name="file" class="btn btn-default" />
-      <input type="submit" value="Upload" class="btn btn-default" />
-                
+      @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
     </p>
+    using (Html.BeginForm("UploadImage", "Topics", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+      <p>
+        <b>Upload Image:</b><input type="file" name="file" class="btn btn-default" />
+        <input type="submit" value="Upload" class="btn btn-default" />
+
+      </p>
+    }
   }
   @Html.Partial("~/Views/Comments/_NewComment.cshtml", new Comment { TopicId = Model.Id })
 
   @Html.Action("Index", "Comments", new { id = Model.Id })
 
-</div>       
+  @Html.ActionLink("Back to List", "Index")
+</div>
