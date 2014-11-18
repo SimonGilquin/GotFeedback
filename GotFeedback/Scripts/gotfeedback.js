@@ -39,15 +39,14 @@
     var form = $(this);
     var commentField = $('input[name="Message"]', form);
     var button = $('input[type="submit"]', form);
-    commentField.attr('disabled', 'disabled');
-    button.attr('disabled', 'disabled');
     $.post(form.attr('action'), form.serialize()).done(function (data, status, xhr) {
       $('#TopicComments').html($('#TopicComments', data).html());
       commentField.val('');
       commentField.removeAttr('disabled');
       button.removeAttr('disabled');
     });
-
+    commentField.attr('disabled', 'disabled');
+    button.attr('disabled', 'disabled');
     return false;
   });
 });

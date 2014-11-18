@@ -25,7 +25,7 @@ namespace GotFeedback.Controllers
         // GET: Comments
         public ActionResult Index(int id)
         {
-            var result = db.Comments.Where(c => c.TopicId == id).ToList();
+            var result = db.Comments.Where(c => c.TopicId == id).OrderByDescending(c=>c.Date).ToList();
             ViewBag.TopicId = id;
             return ControllerContext.IsChildAction ? (ActionResult)PartialView(result) : View(result);
         }
