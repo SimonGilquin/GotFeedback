@@ -6,6 +6,7 @@ namespace GotFeedback.Hubs
 {
     public class TopicHub : Hub
     {
+/*
         private readonly ApplicationDbContext db;
 
         public TopicHub()
@@ -18,8 +19,9 @@ namespace GotFeedback.Hubs
             var usersOnTopic = db.Topics.Select(t => new {t.User.UserName, t.Id}).SingleOrDefault(t => t.Id == id);
             if (usersOnTopic != null)
             {
-                Clients.User(usersOnTopic.UserName).notify();
+                Clients./*User(usersOnTopic.UserName)#1#All.notify();
             }
         }
+*/
     }
 }

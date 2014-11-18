@@ -1,16 +1,26 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
 using System.Web.Routing;
+using GotFeedback.Hubs;
 using GotFeedback.Models;
+using Microsoft.AspNet.SignalR;
 
 namespace GotFeedback.Controllers
 {
     public class CommentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly IHubContext topicHub;
+
+        public CommentsController()
+        {
+            topicHub = GlobalHost.ConnectionManager.GetHubContext<TopicHub>(); 
+
+        }
 
         // GET: Comments
         public ActionResult Index(int id)
@@ -42,32 +52,29 @@ namespace GotFeedback.Controllers
             return ControllerContext.IsChildAction ? (ActionResult)PartialView() : View();
         }
 
-        public async Task<ActionResult> AjaxNew([Bind(Include = "Id,TopicId,Message")] Comment comment)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Comments.Add(comment);
-                await db.SaveChangesAsync();
-
-                return RedirectToAction("Details", "Topics", new {id = comment.TopicId});
-            }
-
-            return new EmptyResult();
-        }
-
         // POST: Comments/New
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> New([Bind(Include = "Id,TopicId,Message")] Comment comment)
+        public async Task<ActionResult> New([Bind(Include = "TopicId,Message")] Comment comment)
         {
             if (ModelState.IsValid)
             {
+                comment.Date = DateTime.Now;
                 db.Comments.Add(comment);
                 await db.SaveChangesAsync();
 
-                return RedirectToAction("Index");
+                var topic = await db.Topics.SingleOrDefaultAsync(t => t.Id == comment.TopicId);
+                topicHub.Clients.All.notify(new
+                {
+                    topicId = topic.Id,
+                    topic = topic.Title,
+                    comment = comment.Message,
+                    commentId = comment.Id
+                });
+
+                return RedirectToAction("Details", "Topics", new { id = comment.TopicId });
             }
 
             return View(comment);

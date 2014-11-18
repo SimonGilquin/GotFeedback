@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GotFeedback.Models
@@ -15,5 +16,7 @@ namespace GotFeedback.Models
 
         [ForeignKey("TopicId")]
         public virtual Topic Topic { get; set; }
+
+        public DateTime Date { get; set; }
     }
 }
