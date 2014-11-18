@@ -15,10 +15,6 @@ textarea {
     padding: 4px;
 }
 
-.the-fix {
-    padding-right: 10px;
-}
-
 .input-wrapper {
     padding:0;
 }
@@ -357,4 +353,9 @@ a.post-tag:hover, .post-text a.post-tag:hover, .wmd-preview a.post-tag:hover {
     -webkit-border-radius: 16px;
     -moz-border-radius: 16px;
     border-radius: 16px;
+}
+
+
+.tab-content {
+    margin-top: 10px;
 }

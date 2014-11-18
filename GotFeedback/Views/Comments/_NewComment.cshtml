@@ -1,33 +1,24 @@
-﻿@model GotFeedback.Models.Comment
+﻿@model Comment
 
-
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/jqueryval")
-<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
-
-@using (Ajax.BeginForm("AjaxNew", "Comments", FormMethod.Post, null))
+@using (@Html.BeginForm("New", "Comments", FormMethod.Post, new { id = "NewCommentForm" }))
 {
-    @Html.AntiForgeryToken()
+  @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.TopicId)
+  <div class="">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.TopicId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" }, labelText: "Add a new comment")
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Message, new { @class = "form-control", placeholder = "Enter your comment here...", required = "required", rows = 4 })
-                @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Post" class="btn btn-default" />
-            </div>
-        </div>
+    <div class="form-group">
+      @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label sr-only" }, labelText: "Add a new comment")
+      <div class="input-group">
+        @Html.TextBoxFor(model => model.Message, new { @class = "form-control", placeholder = "Comment on this topic...", required = "required" })
+        <span class="input-group-btn">
+          <input type="submit" value="Post" class="btn btn-primary" />
+        </span>
+      </div><!-- /input-group -->
+      @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
     </div>
+  </div>
 }
 
 
