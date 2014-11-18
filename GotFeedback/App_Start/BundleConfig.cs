@@ -8,10 +8,10 @@ namespace GotFeedback
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            bundles.Add(new ScriptBundle("~/js/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+            bundles.Add(new ScriptBundle("~/js/jqueryval").Include(
                         "~/Scripts/jquery.validate*",
                         "~/Scripts/_extensions.js"));
 
@@ -20,10 +20,13 @@ namespace GotFeedback
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/javascript").Include(
+            bundles.Add(new ScriptBundle("~/js").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/gotfeedback.js"));
+
+            bundles.Add(new ScriptBundle("~/js/signalr").Include(
+                      "~/Scripts/jquery.signalR-{version}.js"));
 
             bundles.Add(new StyleBundle("~/css").Include(
                       "~/Content/bootstrap.css",
