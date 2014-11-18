@@ -4,37 +4,58 @@
     ViewBag.Title = "Index";
 }
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th></th>
-    </tr>
+<br />
 
-    @foreach (var item in Model)
-    {
-        //Todo : remove after DB clean
-        if (string.IsNullOrEmpty(item.Title))
-        {
-             continue;
-        }
-        
+@using (Html.BeginForm("New", "Topics", FormMethod.Post, new { @class = "" }))
+{
+    <div class="">
+        <input type="text" class="tftextinput" name="q"><input type="submit" value="search" class="tfbutton">
+    </div>
+}
+
+<br />
+
+@using (Html.BeginForm("New", "Topics", FormMethod.Post, new { @class = "" }))
+{
+    <div class="">
+        <button type="submit" class="btn btn-success pull-left">
+            New Topic &nbsp;
+            @*<img src="~/img/Add.png" height="24" width="24" />*@
+        </button>
+    </div>
+}    
+
+<br />
+
+@foreach (var item in Model)
+{
+    <table class="table-responsive" style="margin-top: 5px;margin-bottom: 5px">
         <tr>
-            <td>
-                @Html.ActionLink(@item.Title, "Details", new { id = item.Id })
-            </td>
+            <th colspan="3">
+                @Html.ActionLink(@item.Title, "Details", new { id = item.Id })     
+            </th>
+        </tr>
 
-            <td>
-                @*@Html.ActionLink("Create New", "Create")
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+        <tr>
+            <td colspan="3">
+                <a class="post-tag" rel="tag" title="" href="#">Question</a>
+                <a class="post-tag" rel="tag" title="" href="#">Bug</a>
             </td>
         </tr>
-    }
+        <tr>
+            <td>
+                Like  
+            </td>
+            <td>
+                Ask
+            </td>
+            <td>
+                Comment
+            </td>
+        </tr>
+    </table>
+}
 
-</table>
 
-<br/>     
+<br />
 @Html.ActionLink("Create New", "New")
