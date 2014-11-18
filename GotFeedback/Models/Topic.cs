@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GotFeedback.Models
 {
@@ -18,6 +19,10 @@ namespace GotFeedback.Models
         public ApplicationUser User { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public int LikesCount { get; set; }
+
+        public int ViewCount { get; set; }
     }
 
     public enum TopicCategory

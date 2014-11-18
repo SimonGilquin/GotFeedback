@@ -27,10 +27,17 @@ namespace GotFeedback.Controllers
             userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
 
-        // GET: Topics
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(TopicsOrderBy order = TopicsOrderBy.None)
         {
-            return View(await db.Topics.ToListAsync());
+            switch (order)
+            {
+                case TopicsOrderBy.ViewCount:
+               return View(await db.Topics.OrderByDescending(t => t.ViewCount).ToListAsync());      
+                case TopicsOrderBy.CreatedDate:
+                return View(await db.Topics.OrderByDescending(t => t.CreatedDate).ToListAsync()); 
+                default:
+                    return View(await db.Topics.ToListAsync());;
+            }
         }
 
         // GET: Topics/Details/5
@@ -40,6 +47,11 @@ namespace GotFeedback.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            var currentTopic = await db.Topics.SingleOrDefaultAsync(t => t.Id == id);
+            currentTopic.ViewCount++;
+            db.Entry(currentTopic).State = EntityState.Modified;
+            await db.SaveChangesAsync();
 
             var topic = await db.Topics.Select(t => new
             {
@@ -63,7 +75,6 @@ namespace GotFeedback.Controllers
                     .Replace("-", "")
                     .ToLowerInvariant());
 
-            //   ViewBag.Comments = db.Comments.Where(c => c.TopicId == topic.Id);
 
             return View(topic.Details);
         }
@@ -240,6 +251,26 @@ namespace GotFeedback.Controllers
                 }
             }
         }
+
+        public async Task<ActionResult> AddLike(int id)
+        {
+            Topic topic = await db.Topics.FindAsync(id);
+
+            if (topic == null) return RedirectToAction("Index", "Topics");
+
+            topic.LikesCount++;
+            db.Entry(topic).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Topics");
+        }
+    }
+
+    public enum TopicsOrderBy
+    {
+        ViewCount = 0,
+        CreatedDate = 1           ,
+        None = 2
     }
 }
 
