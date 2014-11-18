@@ -16,8 +16,12 @@
     <h3>
       @Model.Title
     </h3>
-    <h4><small>Submitted on @Model.CreatedDate</small></h4>
-    <h4>Tags</h4>
+      <h4><small>Submitted on @Model.CreatedDate</small></h4>
+    @if (Model.Tags != null)
+    {
+      <h4>Tags</h4>
+
+    }
   </div>
   @if (Model.IsOwner)
   {

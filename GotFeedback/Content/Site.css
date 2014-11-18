@@ -348,7 +348,7 @@ a.post-tag:hover, .post-text a.post-tag:hover, .wmd-preview a.post-tag:hover {
     margin-top: -17px;
 }
 
-.topic-title .gravatar {
+.gravatar {
     width: 32px;
     height: 32px;
     -webkit-border-radius: 16px;

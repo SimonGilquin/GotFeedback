@@ -19,5 +19,7 @@ namespace GotFeedback.Models
 
         public int ViewCount { get; set; }
         public bool IsOwner { get; set; }
+        public int LikesCount { get; set; }
+        public IEnumerable<string> Tags { get; set; }
     }
 }

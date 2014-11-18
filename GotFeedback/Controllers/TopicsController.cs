@@ -31,19 +31,47 @@ namespace GotFeedback.Controllers
 
         public ActionResult Index(TopicsOrderBy order = TopicsOrderBy.None)
         {
-            IEnumerable<Topic> topics;
+            var query = db.Topics.Select(t => new
+            {
+                Details = new TopicDetails
+                {
+                    Id = t.Id,
+                    Category = t.Category,
+                    CreatedDate = t.CreatedDate,
+                    Username = t.User.UserName,
+                    Title = t.Title,
+                    IsOwner = t.User.UserName == User.Identity.Name,
+                    ViewCount = t.ViewCount,
+                    LikesCount = t.LikesCount,
+                    Tags = t.Tags.Select(tag => tag.Label)
+                },
+                Email = t.User.Email,
+            });
             switch (order)
             {
                 case TopicsOrderBy.ViewCount:
-                    topics = db.Topics.OrderByDescending(t => t.ViewCount).ToList();
+                    query = query.OrderByDescending(t => t.Details.ViewCount);
                     break;
                 case TopicsOrderBy.CreatedDate:
-                    topics = db.Topics.OrderByDescending(t => t.CreatedDate).ToList();
+                    query = query.OrderByDescending(t => t.Details.CreatedDate);
                     break;
                 default:
-                    topics= db.Topics.OrderByDescending(t => t.CreatedDate).ToList();
+                    query = query.OrderByDescending(t => t.Details.CreatedDate);
                     break;
             }
+            var topics = query.ToList().Select(t =>
+            {
+                var topic = t.Details;
+                if (t.Email != null)
+                {
+                    topic.GravatarUrl = string.Format("http://www.gravatar.com/avatar/{0}",
+                BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(t.Email.ToLowerInvariant())))
+                    .Replace("-", "")
+                    .ToLowerInvariant());
+
+                }
+                return topic;
+            }).ToList();
             return ControllerContext.IsChildAction ? (ActionResult)PartialView(topics) : View(topics);
         }
 
@@ -82,7 +110,7 @@ namespace GotFeedback.Controllers
                 return HttpNotFound();
             }
 
-            if (topic.Email!=null)
+            if (topic.Email != null)
             {
                 topic.Details.GravatarUrl = string.Format("http://www.gravatar.com/avatar/{0}",
             BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(topic.Email.ToLowerInvariant())))
@@ -289,7 +317,7 @@ namespace GotFeedback.Controllers
         public async Task<ActionResult> Search(FormCollection formCollection)
         {
             var searchString = formCollection["searchString"];
-            var topics =  await 
+            var topics = await
                 db.Topics.Where(t => t.Title.Contains(searchString)).ToListAsync();
 
             return View("Index", topics);
