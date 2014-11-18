@@ -16,7 +16,11 @@
     <h3>
       @Model.Title
     </h3>
-    <h4><small>Submitted on @Model.CreatedDate</small></h4>
+      <h4><small>Submitted on @Model.CreatedDate</small></h4>      
+      <h4>Tags</h4>
+      <div class="col-md-6">
+          <input type="text" id="tags">
+      </div>
   </div>
   <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
@@ -33,4 +37,20 @@
 
   @Html.Action("Index", "Comments", new { id = Model.Id })
 
-</div>
+</div>       
+
+@Scripts.Render("~/js/jquery")
+@Scripts.Render("~/js")
+
+<script>
+    $('#tags').selectize({
+        delimiter: ',',
+        persist: false,
+        create: function (input) {
+            return {
+                value: input,
+                text: input
+            }
+        }
+    });
+</script>
